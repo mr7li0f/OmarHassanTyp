@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Omar Hassan Type Design portfolio and Arabic font showcase." />
+  <meta name="theme-color" content="#f3eee3" />
+  <title>عُمَر حسَن | Font Library</title>
+  <link rel="stylesheet" href="./style.css?v=20260418.7" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <style id="dynamic-font-faces"></style>
+  <link rel="icon" href="./logo.jpeg">
+</head>
+<body data-page="fonts">
+
+  <!-- Fixed Topbar -->
+  <div id="topbar">
+    <img id="topbar-logo" src="./logo.jpeg" alt="عُمَر حسَن" title="لوحة التحكم" />
+    <button id="menu-toggle" aria-label="القائمة" title="القائمة"><i class="fa-solid fa-bars"></i></button>
+  </div>
+
+  <!-- Drawer Overlay -->
+  <div id="drawer-overlay"></div>
+
+  <!-- Bottom Sheet Drawer -->
+  <div id="drawer">
+    <div class="drawer-handle-bar"></div>
+    <div class="drawer-header">
+      <span class="drawer-title">عُمَر حسَن</span>
+      <button id="drawer-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <nav class="drawer-nav">
+      <button class="drawer-item" data-section="home">
+        <i class="fa-solid fa-house"></i>
+        <span id="drawer-home-text">الرئيسية</span>
+      </button>
+      <div class="drawer-divider"></div>
+      <button class="drawer-item active" data-section="fonts">
+        <i class="fa-solid fa-font"></i>
+        <span id="drawer-fonts-text">الخطوط</span>
+      </button>
+      <div class="drawer-divider"></div>
+      <button class="drawer-item" data-section="accounts">
+        <i class="fa-solid fa-address-card"></i>
+        <span id="drawer-accounts-text">الحسابات</span>
+      </button>
+      <div class="drawer-divider"></div>
+      <button class="drawer-item" type="button" data-action="open-settings">
+        <i class="fa-solid fa-gear"></i>
+        <span id="drawer-settings-text">الإعدادات</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- App -->
+  <div id="app">
+    <main id="content">
+
+      <!-- Home -->
+      <section id="sec-home" class="section active">
+        <div class="home-hero">
+          <div class="home-logo-wrap">
+            <img src="./logo.jpeg" alt="عُمَر حسَن" class="home-logo" />
+            <div class="home-ring"></div>
+          </div>
+          <h1 class="home-title">عُمَر حسَن</h1>
+          <p class="home-sub" id="home-sub-text">Type Designer</p>
+          <p class="home-lead" id="home-lead-text">تصميم خطوط عربية بهوية معاصرة، دقة بصرية، وتجارب عرض تبرز شخصية كل خط.</p>
+        </div>
+
+        <!-- Poster Slider -->
+        <div class="home-slider-wrap hidden" id="home-slider-wrap">
+          <div class="home-slider-track">
+            <div class="home-slider" id="home-slider"></div>
+            <button class="slider-arrow slider-arrow-prev" id="slider-prev" aria-label="السابق">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button class="slider-arrow slider-arrow-next" id="slider-next" aria-label="التالي">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+          </div>
+          <div class="slider-bottom-bar">
+            <div class="home-slider-dots" id="home-slider-dots"></div>
+            <span class="slider-counter" id="slider-counter"></span>
+          </div>
+        </div>
+
+        <!-- Fonts on Home -->
+        <div class="home-fonts-section" id="home-fonts-section">
+          <div class="home-fonts-head">
+            <div>
+              <h2 class="home-fonts-title" id="home-fonts-title-text">مكتبة الخطوط</h2>
+              <p class="home-fonts-sub" id="home-fonts-sub-text">بوسترات وتجارب بصرية تعكس روح كل خط.</p>
+            </div>
+          </div>
+          <div id="home-fonts-grid" class="fonts-grid"></div>
+          <div id="home-fonts-empty" class="empty-msg hidden">لا توجد نتائج للبحث</div>
+        </div>
+      </section>
+
+      <!-- Accounts (Personal + Work) -->
+      <section id="sec-accounts" class="section">
+        <div class="accounts-list">
+          <div class="accounts-group">
+            <h2 class="accounts-group-title" id="accounts-personal-title">الحسابات الشخصية</h2>
+            <div id="social-grid" class="social-grid"></div>
+          </div>
+          <div class="accounts-group">
+            <h2 class="accounts-group-title" id="accounts-work-title">حسابات العمل</h2>
+            <div id="work-social-grid" class="social-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Font Detail -->
+      <section id="sec-font-detail" class="section">
+        <div class="font-detail-page">
+          <button class="font-detail-back" id="font-detail-back">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span id="font-detail-back-text">رجوع</span>
+          </button>
+          <div class="font-detail-header">
+            <h1 id="fd-title-ar" class="fd-title-ar"></h1>
+            <p  id="fd-title-en" class="fd-title-en"></p>
+            <div id="fd-descriptions" class="fd-descriptions">
+              <p id="fd-desc-ar" class="fd-desc fd-desc-ar"></p>
+              <p id="fd-desc-en" class="fd-desc fd-desc-en"></p>
+            </div>
+          </div>
+          <div id="fd-images" class="fd-images"></div>
+          <div id="fd-pricing-section" class="fd-pricing-section hidden">
+            <div class="fd-pricing-inner">
+              <div id="fd-price-badge"></div>
+              <div id="fd-license-row" class="fd-license-row hidden"></div>
+            </div>
+            <div id="fd-weight-cats" class="fd-weight-cats"></div>
+          </div>
+          <div id="fd-weights-section" class="fd-weights-section hidden">
+            <p id="fd-weights-text" class="fd-weights-text"></p>
+          </div>
+          <div id="fd-download-wrap" class="fd-download-wrap hidden">
+            <div class="fd-download-actions">
+              <a id="fd-download-btn" href="" class="btn-white fd-download-btn" target="_blank">
+                <i class="fa-solid fa-download"></i>
+                <span id="fd-download-btn-text">تحميل الخط</span>
+              </a>
+              <button id="fd-download-zip-btn" class="btn-white fd-download-btn fd-download-zip" type="button">
+                <i class="fa-solid fa-file-zipper"></i>
+                <span id="fd-download-zip-btn-text">تحميل ZIP</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="overlay hidden">
+    <div class="modal-card">
+      <button class="modal-x" id="close-login"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="login-title-text">تسجيل الدخول</h3>
+      <form id="login-form">
+        <input type="text" id="username-input" placeholder="اسم المستخدم" autocomplete="username" required />
+        <input type="password" id="password-input" placeholder="كلمة المرور" autocomplete="current-password" required />
+        <button type="submit" class="btn-white full" id="login-submit-text">دخول</button>
+        <p id="login-error" class="err hidden"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="overlay hidden">
+    <div class="modal-card settings-card">
+      <button class="modal-x" id="close-settings"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="settings-title-text">الإعدادات العامة</h3>
+      <div class="settings-grid">
+        <label for="settings-language" id="settings-language-label">اللغة</label>
+        <select id="settings-language">
+          <option value="ar" id="lang-ar-opt">العربية</option>
+          <option value="ku" id="lang-ku-opt">کوردی</option>
+          <option value="en" id="lang-en-opt">English</option>
+        </select>
+
+        <label for="settings-theme" id="settings-theme-label">المظهر</label>
+        <select id="settings-theme">
+          <option value="auto" id="theme-auto-opt">تلقائي</option>
+          <option value="morning" id="theme-morning-opt">صباحي</option>
+          <option value="night" id="theme-night-opt">ليلي</option>
+        </select>
+
+        <label for="settings-visitor-name" id="settings-visitor-name-label">اسم المستخدم</label>
+        <input type="text" id="settings-visitor-name" maxlength="60" placeholder="اكتب اسمك لعمليات التحميل" autocomplete="name" />
+      </div>
+      <button type="button" class="btn-white full" id="save-settings-btn">حفظ الإعدادات</button>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-panel" class="hidden">
+    <div class="admin-topbar">
+      <span id="admin-topbar-title">لوحة التحكم — عُمَر حسَن</span>
+      <button id="logout-btn" class="btn-red">خروج</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="atab active" data-atab="social-tab" id="atab-social">الحسابات الشخصية</button>
+      <button class="atab" data-atab="work-social-tab" id="atab-work">حسابات العمل</button>
+      <button class="atab" data-atab="fonts-tab" id="atab-fonts">الخطوط</button>
+      <button class="atab" data-atab="stats-tab" id="atab-stats">الإحصائيات</button>
+    </div>
+
+    <div id="social-tab" class="atab-content active">
+      <h3 id="social-tab-title">روابط الحسابات الشخصية</h3>
+      <div id="social-editor"></div>
+      <button class="btn-dashed" id="add-social-btn">+ إضافة حساب</button>
+      <button class="btn-white" id="save-social-btn">حفظ</button>
+    </div>
+
+    <div id="work-social-tab" class="atab-content hidden">
+      <h3 id="work-social-tab-title">روابط حسابات العمل</h3>
+      <div id="work-social-editor"></div>
+      <button class="btn-dashed" id="add-work-social-btn">+ إضافة حساب</button>
+      <button class="btn-white" id="save-work-social-btn">حفظ</button>
+    </div>
+
+    <div id="fonts-tab" class="atab-content hidden">
+      <h3 id="fonts-tab-title">إضافة خط</h3>
+      <form id="font-form" class="add-form">
+        <input type="text" name="title" placeholder="اسم الخط بالعربي" required />
+        <input type="text" name="titleEn" placeholder="اسم الخط بالإنجليزي" />
+        <label>الوصف بالعربي</label>
+        <textarea name="descriptionAr" placeholder="الوصف العربي للخط"></textarea>
+        <label>الوصف بالإنجليزي</label>
+        <textarea name="descriptionEn" placeholder="English description of the font"></textarea>
+        <input type="url" name="downloadUrl" placeholder="رابط التحميل (اختياري)" />
+        <label>الأوزان <span style="color:var(--muted);font-size:0.8rem">(مثال: Light, Regular, Bold, Black)</span></label>
+        <input type="text" name="weights" placeholder="أدخل الأوزان مفصولة بفاصلة" />
+        <label>نوع الخط</label>
+        <div class="price-toggle-wrap">
+          <button type="button" class="pt-btn active" data-form="add" data-val="false">مجاني</button>
+          <button type="button" class="pt-btn" data-form="add" data-val="true">مدفوع</button>
+          <input type="hidden" name="isPaid" id="add-is-paid" value="false" />
+        </div>
+        <input type="text" name="license" placeholder="الترخيص (مثال: Personal Use, Open Source, Commercial)" />
+        <input type="text" name="freeWeights" placeholder="الأوزان المجانية مفصولة بفاصلة (اختياري)" />
+        <input type="text" name="paidWeights" placeholder="الأوزان المدفوعة مفصولة بفاصلة (اختياري)" />
+        <label>ملف الخط <span style="color:var(--muted);font-size:0.8rem">(.ttf / .otf / .woff / .woff2) — لعرض معاينة الخط على الكارت</span></label>
+        <input type="file" name="fontFile" accept=".ttf,.otf,.woff,.woff2" />
+        <label>بوسترات الخط <span style="color:var(--muted);font-size:0.8rem">(يمكنك اختيار أكثر من صورة)</span></label>
+        <input type="file" name="images" accept="image/*" multiple />
+        <button type="submit" class="btn-white" id="font-submit-btn">إضافة الخط</button>
+      </form>
+      <div id="admin-fonts-list" class="admin-list"></div>
+    </div>
+
+    <div id="stats-tab" class="atab-content hidden">
+      <h3 id="stats-tab-title">إحصائيات الموقع</h3>
+      <div id="stats-container">
+        <div class="stats-cards">
+          <div class="stat-card">
+            <div class="stat-num" id="stat-total">—</div>
+            <div class="stat-label" id="stat-total-label">إجمالي الزيارات</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-today">—</div>
+            <div class="stat-label" id="stat-today-label">زيارات اليوم</div>
+          </div>
+        </div>
+        <div class="stats-fonts-section">
+          <h4 class="stats-sub-title" id="stats-sub-title">إحصائيات الخطوط — المشاهدات والتحميلات</h4>
+          <div id="stats-fonts-list" class="stats-fonts-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Font Modal -->
+  <div id="edit-font-modal" class="overlay hidden">
+    <div class="modal-card" style="max-width:540px;max-height:92vh;overflow-y:auto">
+      <button class="modal-x" id="close-edit-modal"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="edit-font-title">تعديل الخط</h3>
+      <form id="edit-font-form" class="add-form" style="background:transparent;border:none;padding:0">
+        <input type="hidden" name="fontId" id="edit-font-id" />
+        <input type="text" name="title" id="edit-title" placeholder="اسم الخط بالعربي" required />
+        <input type="text" name="titleEn" id="edit-title-en" placeholder="اسم الخط بالإنجليزي" />
+        <label>الوصف بالعربي</label>
+        <textarea name="descriptionAr" id="edit-desc-ar" placeholder="الوصف العربي"></textarea>
+        <label>الوصف بالإنجليزي</label>
+        <textarea name="descriptionEn" id="edit-desc-en" placeholder="English description"></textarea>
+        <input type="url" name="downloadUrl" id="edit-download-url" placeholder="رابط التحميل" />
+        <input type="text" name="weights" id="edit-weights" placeholder="الأوزان مفصولة بفاصلة" />
+        <label>نوع الخط</label>
+        <div class="price-toggle-wrap">
+          <button type="button" class="pt-btn active" data-form="edit" data-val="false">مجاني</button>
+          <button type="button" class="pt-btn" data-form="edit" data-val="true">مدفوع</button>
+          <input type="hidden" name="isPaid" id="edit-is-paid" value="false" />
+        </div>
+        <input type="text" name="license" id="edit-license" placeholder="الترخيص (مثال: Personal Use, Open Source, Commercial)" />
+        <input type="text" name="freeWeights" id="edit-free-weights" placeholder="الأوزان المجانية مفصولة بفاصلة (اختياري)" />
+        <input type="text" name="paidWeights" id="edit-paid-weights" placeholder="الأوزان المدفوعة مفصولة بفاصلة (اختياري)" />
+        <label>ملف الخط <span style="color:var(--muted);font-size:0.8rem">(.ttf / .otf / .woff / .woff2)</span></label>
+        <div id="edit-font-file-current" style="font-size:0.82rem;color:var(--muted2);margin-bottom:4px"></div>
+        <input type="file" name="fontFile" accept=".ttf,.otf,.woff,.woff2" />
+        <label>استبدال الصور <span style="color:var(--muted);font-size:0.8rem">(اتركه فارغاً للإبقاء على الصور الحالية)</span></label>
+        <input type="file" name="images" accept="image/*" multiple />
+        <button type="submit" class="btn-white" id="edit-submit-btn">حفظ التعديلات</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Font Gallery Viewer -->
+  <div id="image-viewer" class="image-viewer hidden" aria-hidden="true">
+    <button id="image-viewer-close" class="image-viewer-close" aria-label="إغلاق">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button id="image-viewer-prev" class="image-viewer-nav prev" aria-label="السابق">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <figure class="image-viewer-stage">
+      <img id="image-viewer-img" src="" alt="Font poster" />
+      <figcaption id="image-viewer-caption"></figcaption>
+    </figure>
+    <button id="image-viewer-next" class="image-viewer-nav next" aria-label="التالي">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+  </div>
+
+  <script src="./content.data.js?v=20260418.5"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="./app.js?v=20260418.7"></script>
+</body>
+</html>
