@@ -4473,20 +4473,40 @@ body.lang-rtl .home-sub,
 body.lang-rtl .home-lead,
 body.lang-rtl .fd-desc,
 body.lang-rtl .fd-desc-ar,
-body.lang-rtl .font-card-ar,
 body.lang-rtl .font-card-en {
   direction: rtl !important;
-  unicode-bidi: plaintext;
+  unicode-bidi: isolate !important;
+  text-align: right !important;
 }
 
 body:not(.lang-rtl) .home-sub,
 body:not(.lang-rtl) .home-lead,
 body:not(.lang-rtl) .fd-desc,
 body:not(.lang-rtl) .fd-desc-ar,
-body:not(.lang-rtl) .font-card-ar,
 body:not(.lang-rtl) .font-card-en {
   direction: ltr !important;
-  unicode-bidi: plaintext;
+  unicode-bidi: isolate !important;
+  text-align: left !important;
+}
+
+/* Keep Arabic labels RTL even inside LTR UI (Safari/iOS safe). */
+.font-card-ar,
+.fd-title-ar {
+  direction: rtl !important;
+  unicode-bidi: isolate !important;
+  text-align: right !important;
+}
+
+body.lang-rtl .home-title,
+body.lang-rtl .drawer-title {
+  direction: rtl !important;
+  unicode-bidi: isolate !important;
+}
+
+body.lang-ltr .home-title,
+body.lang-ltr .drawer-title {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
 }
 
 #slider-counter,

@@ -61,6 +61,69 @@ const KNOWN_FONT_ZIP_FALLBACKS = [
   { pattern: /(^|\s)(قهوة|qahwa)(\s|$)/i, url: '/data/qahwa/fonts/Qahwa-fonts.zip' },
   { pattern: /(^|\s)(المهندس|engineer)(\s|$)/i, url: '/data/Engineer Font/fonts/Engineer-fonts.zip' }
 ];
+const SEO_LANGS = ['ar', 'en', 'ku'];
+const SEO_OG_LOCALE_BY_LANG = {
+  ar: 'ar_AR',
+  en: 'en_US',
+  ku: 'ku_Arab_IQ'
+};
+const SEO_TEXT = {
+  ar: {
+    siteName: 'عمر حسن تايب',
+    homeTitle: 'عمر حسن تايب | مصمم خطوط عربية',
+    homeDescription: 'موقع عمر حسن لتصميم الخطوط العربية: عرض الخطوط، الأوزان، التفاصيل، وروابط الحسابات الرسمية.',
+    fontsTitle: 'مكتبة الخطوط | عمر حسن تايب',
+    fontsDescription: 'مكتبة كاملة لخطوط عمر حسن مع معاينات بصرية، تفاصيل كل خط، والأوزان المتاحة للتحميل.',
+    fontDescriptionFallback: 'تفاصيل خط عربي من تصميم عمر حسن مع صور معاينة، الأوزان، وخيارات التحميل.'
+  },
+  en: {
+    siteName: 'Omar Hassan Type',
+    homeTitle: 'Omar Hassan Type | Arabic Type Designer',
+    homeDescription: 'Official Omar Hassan Type portfolio for Arabic fonts, font weights, previews, and verified account links.',
+    fontsTitle: 'Font Library | Omar Hassan Type',
+    fontsDescription: 'Browse Omar Hassan Arabic fonts with visual previews, detailed pages, and downloadable weight options.',
+    fontDescriptionFallback: 'Arabic font details by Omar Hassan with previews, available weights, and download options.'
+  },
+  ku: {
+    siteName: 'عومەر حەسەن تایپ',
+    homeTitle: 'عومەر حەسەن تایپ | دیزاینەری فۆنتی عەرەبی',
+    homeDescription: 'ماڵپەڕی عومەر حەسەن بۆ فۆنتی عەرەبی: پیشاندانی فۆنت، کێشەکان، وردەکاری و بەستەری هەژمارە فەرمییەکان.',
+    fontsTitle: 'کتێبخانەی فۆنت | عومەر حەسەن تایپ',
+    fontsDescription: 'کتێبخانەی تەواوی فۆنتەکانی عومەر حەسەن لەگەڵ پیشاندانی بینراو، وردەکاری هەر فۆنت و کێشە بەردەستەکان.',
+    fontDescriptionFallback: 'وردەکاری فۆنتی عەرەبی لەلایەن عومەر حەسەن، لەگەڵ وێنەی پیشاندان، کێشەکان و هەڵبژاردەکانی داگرتن.'
+  }
+};
+const SEO_GLOBAL_KEYWORDS = [
+  'Omar Hassan',
+  'Omar Hassan Type',
+  'Arabic fonts',
+  'Arabic typeface',
+  'Kufi font',
+  'Font weights',
+  'Type designer',
+  'خطوط عربية',
+  'تصميم خطوط',
+  'أوزان الخط',
+  'تحميل خط',
+  'مصمم خطوط',
+  'فۆنتی عەرەبی',
+  'دیزاینی فۆنت',
+  'کێشەکانی فۆنت',
+  'داگرتنی فۆنت',
+  'عمر حسن',
+  'عُمَر حسَن',
+  'عومەر حەسەن'
+];
+const BRAND_NAME_BY_LANG = {
+  ar: 'عُمَر حسَن',
+  en: 'Omar Hassan',
+  ku: 'عومەر حەسەن'
+};
+const SEO_KEYWORDS_BY_LANG = {
+  ar: ['الخطوط', 'الخط العربي', 'مكتبة الخطوط', 'حسابات عمر حسن', 'روابط المصمم'],
+  en: ['font library', 'Arabic calligraphy font', 'font showcase', 'designer accounts', 'type portfolio'],
+  ku: ['کتێبخانەی فۆنت', 'فۆنتی عەرەبی', 'پیشاندانی فۆنت', 'هەژمارەکانی دیزاینەر', 'پۆرتفۆلیۆی تایپ']
+};
 const QAHWA_DESCRIPTION_BY_LANG = {
   en: 'Qahwa Arabic is a beautiful, modern Arabic typeface with a refined look, crafted to shine in headlines and logos. Designed and programmed by Omar Hassan in 2026.',
   ar: 'خط قهوة العربي هو خط عربي جميل وعصري بطابع أنيق، ومصمم خصيصا ليبرز في العناوين والشعارات. تم تصميمه وبرمجته بواسطة عمر حسن في عام 2026.',
@@ -675,6 +738,27 @@ function normalizeLanguageCode(value, fallback = 'ar') {
   return fallback;
 }
 
+function getBrandDisplayName(language = currentLanguage) {
+  return BRAND_NAME_BY_LANG[language] || BRAND_NAME_BY_LANG.ar;
+}
+
+function updateBrandLabels() {
+  const brandName = getBrandDisplayName();
+
+  document.querySelectorAll('.drawer-title, .home-title, .splash-name').forEach(el => {
+    if (!el) return;
+    el.textContent = brandName;
+    el.setAttribute('dir', RTL_LANGS.includes(currentLanguage) ? 'rtl' : 'ltr');
+    el.setAttribute('lang', currentLanguage === 'ku' ? 'ku' : currentLanguage);
+  });
+
+  const topbarLogo = document.getElementById('topbar-logo');
+  if (topbarLogo) topbarLogo.setAttribute('alt', brandName);
+
+  const splashLogo = document.getElementById('splash-logo');
+  if (splashLogo) splashLogo.setAttribute('alt', brandName);
+}
+
 function detectDeviceLanguage() {
   const candidates = Array.isArray(navigator.languages) ? [...navigator.languages] : [];
   candidates.push(navigator.language || '');
@@ -683,6 +767,327 @@ function detectDeviceLanguage() {
     if (normalized) return normalized;
   }
   return 'ar';
+}
+
+function sanitizeSeoText(value, maxLength = 190) {
+  const clean = String(value || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return '';
+  if (clean.length <= maxLength) return clean;
+  return `${clean.slice(0, Math.max(0, maxLength - 3)).trim()}...`;
+}
+
+function normalizeSeoKeyword(value) {
+  return String(value || '')
+    .replace(/[\r\n\t]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function uniqueSeoKeywords(values = [], maxCount = 160) {
+  const list = [];
+  const seen = new Set();
+
+  values.forEach(value => {
+    const token = normalizeSeoKeyword(value);
+    if (!token) return;
+    const key = token.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    list.push(token);
+  });
+
+  return list.slice(0, maxCount);
+}
+
+function upsertMetaByName(name, content) {
+  if (!name) return;
+  let tag = document.head.querySelector(`meta[name="${name}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute('name', name);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', String(content || ''));
+}
+
+function upsertMetaByProperty(property, content) {
+  if (!property) return;
+  let tag = document.head.querySelector(`meta[property="${property}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute('property', property);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', String(content || ''));
+}
+
+function upsertLinkTag(rel, href, attributes = {}) {
+  if (!rel || !href) return;
+
+  const candidates = Array.from(document.head.querySelectorAll(`link[rel="${rel}"]`));
+  let link = candidates.find(item => {
+    return Object.entries(attributes).every(([key, value]) => item.getAttribute(key) === String(value));
+  });
+
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', rel);
+    Object.entries(attributes).forEach(([key, value]) => {
+      link.setAttribute(key, String(value));
+    });
+    document.head.appendChild(link);
+  }
+
+  link.setAttribute('href', String(href));
+}
+
+function upsertJsonLdScript(id, payload) {
+  if (!id || !payload) return;
+  let script = document.getElementById(id);
+  if (!script) {
+    script = document.createElement('script');
+    script.id = id;
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(payload);
+}
+
+function toAbsoluteSeoUrl(value) {
+  if (!value) return '';
+  try {
+    return new URL(String(value), window.location.href).href;
+  } catch {
+    return '';
+  }
+}
+
+function getLocalizedFontSeoName(font) {
+  if (!font) return '';
+  const titleAr = String(font.title || '').trim();
+  const titleEn = String(font.titleEn || font.title_en || '').trim();
+
+  if (currentLanguage === 'en') return titleEn || titleAr;
+  if (currentLanguage === 'ku') return titleAr || titleEn;
+  return titleAr || titleEn;
+}
+
+function getLocalizedFontSeoDescription(font) {
+  if (!font) return '';
+
+  if (currentLanguage === 'en') {
+    return String(font.descriptionEn || font.descriptionAr || font.descriptionKu || font.description || '').trim();
+  }
+
+  if (currentLanguage === 'ku') {
+    return String(font.descriptionKu || font.descriptionAr || font.descriptionEn || font.description || '').trim();
+  }
+
+  return String(font.descriptionAr || font.descriptionKu || font.descriptionEn || font.description || '').trim();
+}
+
+function buildSeoWeightSentence(weights = []) {
+  if (!weights.length) return '';
+  if (currentLanguage === 'en') return `Available weights: ${weights.join(', ')}.`;
+  if (currentLanguage === 'ku') return `کێشە بەردەستەکان: ${weights.join('، ')}.`;
+  return `الأوزان المتاحة: ${weights.join('، ')}.`;
+}
+
+function getSeoCanonicalUrl() {
+  const url = new URL(window.location.href);
+  url.hash = '';
+
+  const allowedParams = new Set(pageType === 'font' ? ['id', 'lang'] : ['lang']);
+  [...url.searchParams.keys()].forEach(key => {
+    if (!allowedParams.has(key)) url.searchParams.delete(key);
+  });
+
+  if (pageType === 'font') {
+    const numericId = Number(currentFontId);
+    if (Number.isFinite(numericId)) {
+      url.searchParams.set('id', String(numericId));
+    } else {
+      url.searchParams.delete('id');
+    }
+  } else {
+    url.searchParams.delete('id');
+  }
+
+  url.searchParams.set('lang', currentLanguage);
+  return url;
+}
+
+function buildSeoKeywordPool(activeFont = null) {
+  const fonts = getDisplayFonts();
+  const links = getCombinedAccountLinks();
+
+  const fontNames = fonts.flatMap(font => [font.title, font.titleEn]);
+  const weightNames = fonts.flatMap(font => getFontWeightList(font));
+  const accountPlatforms = links.map(link => link.platform || '');
+  const accountHosts = links.map(link => formatHostLabel(link.href || link.url || ''));
+
+  const activeTokens = activeFont
+    ? [activeFont.title, activeFont.titleEn, ...getFontWeightList(activeFont)]
+    : [];
+
+  return uniqueSeoKeywords([
+    ...SEO_GLOBAL_KEYWORDS,
+    ...(SEO_KEYWORDS_BY_LANG[currentLanguage] || []),
+    ...fontNames,
+    ...weightNames,
+    ...accountPlatforms,
+    ...accountHosts,
+    ...activeTokens
+  ]);
+}
+
+function buildSeoJsonLd(canonicalUrl, pageTitle, pageDescription, activeFont, imageUrl) {
+  const links = getCombinedAccountLinks();
+  const sameAs = uniqueSeoKeywords(
+    links.map(link => normalizeOutboundUrl(link.href || link.url || '')).filter(url => url && url !== '#'),
+    30
+  );
+  const baseSiteUrl = toAbsoluteSeoUrl('./home.html');
+
+  const graph = [
+    {
+      '@type': 'Person',
+      name: 'Omar Hassan',
+      alternateName: ['عمر حسن', 'عُمَر حسَن', 'عومەر حەسەن', 'Omar Hassan Type'],
+      url: baseSiteUrl || canonicalUrl.href,
+      sameAs
+    },
+    {
+      '@type': 'WebSite',
+      name: (SEO_TEXT[currentLanguage] || SEO_TEXT.ar).siteName,
+      alternateName: ['Omar Hassan Type', 'عمر حسن تايب', 'عومەر حەسەن تایپ'],
+      url: baseSiteUrl || canonicalUrl.href,
+      inLanguage: SEO_LANGS
+    }
+  ];
+
+  if (pageType === 'font' && activeFont) {
+    graph.push({
+      '@type': 'CreativeWork',
+      name: getLocalizedFontSeoName(activeFont) || pageTitle,
+      alternateName: uniqueSeoKeywords([activeFont.title, activeFont.titleEn], 6),
+      description: pageDescription,
+      image: getFontImages(activeFont).map(toAbsoluteSeoUrl).filter(Boolean).slice(0, 12),
+      creator: { '@type': 'Person', name: 'Omar Hassan' },
+      inLanguage: SEO_LANGS,
+      url: canonicalUrl.href,
+      keywords: buildSeoKeywordPool(activeFont).slice(0, 80).join(', '),
+      about: getFontWeightList(activeFont).map(weight => ({ '@type': 'DefinedTerm', name: weight }))
+    });
+  } else if (pageType === 'fonts') {
+    graph.push({
+      '@type': 'CollectionPage',
+      name: pageTitle,
+      description: pageDescription,
+      inLanguage: SEO_LANGS,
+      url: canonicalUrl.href,
+      image: imageUrl,
+      keywords: buildSeoKeywordPool().slice(0, 80).join(', ')
+    });
+  } else {
+    graph.push({
+      '@type': 'WebPage',
+      name: pageTitle,
+      description: pageDescription,
+      inLanguage: SEO_LANGS,
+      url: canonicalUrl.href,
+      image: imageUrl,
+      keywords: buildSeoKeywordPool().slice(0, 80).join(', ')
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph
+  };
+}
+
+function updateSeoMetadata(activeFontOverride = null) {
+  const langPack = SEO_TEXT[currentLanguage] || SEO_TEXT.ar;
+  const displayFonts = getDisplayFonts();
+
+  const activeFont = pageType === 'font'
+    ? (activeFontOverride || displayFonts.find(font => Number(font.id) === Number(currentFontId)) || null)
+    : null;
+
+  let seoTitle = langPack.homeTitle;
+  let seoDescription = langPack.homeDescription;
+  let ogType = 'website';
+
+  if (pageType === 'fonts') {
+    seoTitle = langPack.fontsTitle;
+    const countText = Number.isFinite(displayFonts.length) && displayFonts.length > 0
+      ? (currentLanguage === 'en'
+        ? `Total fonts: ${displayFonts.length}.`
+        : (currentLanguage === 'ku'
+          ? `ژمارەی فۆنتەکان: ${displayFonts.length}.`
+          : `عدد الخطوط: ${displayFonts.length}.`))
+      : '';
+    seoDescription = sanitizeSeoText(`${langPack.fontsDescription} ${countText}`);
+  }
+
+  if (pageType === 'font' && activeFont) {
+    const fontName = getLocalizedFontSeoName(activeFont) || langPack.siteName;
+    const fontDescription = getLocalizedFontSeoDescription(activeFont) || langPack.fontDescriptionFallback;
+    const weights = getFontWeightList(activeFont);
+    const weightSentence = buildSeoWeightSentence(weights);
+
+    seoTitle = `${fontName} | ${langPack.siteName}`;
+    seoDescription = sanitizeSeoText(`${fontDescription} ${weightSentence}`);
+    ogType = 'product';
+  }
+
+  seoDescription = sanitizeSeoText(seoDescription || langPack.homeDescription);
+  const keywordText = buildSeoKeywordPool(activeFont).join(', ');
+  const canonicalUrl = getSeoCanonicalUrl();
+
+  const pageImageSource = activeFont ? (getFontImages(activeFont)[0] || './logo.jpeg') : './logo.jpeg';
+  const pageImageUrl = toAbsoluteSeoUrl(pageImageSource) || toAbsoluteSeoUrl('./logo.jpeg');
+
+  document.title = seoTitle;
+
+  upsertMetaByName('description', seoDescription);
+  upsertMetaByName('keywords', keywordText);
+  upsertMetaByName('author', 'Omar Hassan');
+  upsertMetaByName('robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');
+  upsertMetaByName('language', currentLanguage);
+  upsertMetaByName('application-name', langPack.siteName);
+  upsertMetaByName('apple-mobile-web-app-title', langPack.siteName);
+
+  upsertMetaByProperty('og:site_name', langPack.siteName);
+  upsertMetaByProperty('og:type', ogType);
+  upsertMetaByProperty('og:title', seoTitle);
+  upsertMetaByProperty('og:description', seoDescription);
+  upsertMetaByProperty('og:url', canonicalUrl.href);
+  upsertMetaByProperty('og:image', pageImageUrl);
+  upsertMetaByProperty('og:locale', SEO_OG_LOCALE_BY_LANG[currentLanguage] || SEO_OG_LOCALE_BY_LANG.ar);
+
+  upsertMetaByName('twitter:card', 'summary_large_image');
+  upsertMetaByName('twitter:title', seoTitle);
+  upsertMetaByName('twitter:description', seoDescription);
+  upsertMetaByName('twitter:image', pageImageUrl);
+
+  upsertLinkTag('canonical', canonicalUrl.href);
+
+  SEO_LANGS.forEach(lang => {
+    const altUrl = new URL(canonicalUrl.href);
+    altUrl.searchParams.set('lang', lang);
+    upsertLinkTag('alternate', altUrl.href, { hreflang: lang });
+  });
+
+  const xDefaultUrl = new URL(canonicalUrl.href);
+  xDefaultUrl.searchParams.set('lang', 'ar');
+  upsertLinkTag('alternate', xDefaultUrl.href, { hreflang: 'x-default' });
+
+  upsertJsonLdScript(
+    'seo-json-ld',
+    buildSeoJsonLd(canonicalUrl, seoTitle, seoDescription, activeFont, pageImageUrl)
+  );
 }
 
 function isRtlLayout() {
@@ -1210,6 +1615,8 @@ function applyLanguage(language, persist = true) {
   document.body.classList.toggle('lang-rtl', RTL_LANGS.includes(currentLanguage));
   document.body.classList.toggle('lang-ltr', !RTL_LANGS.includes(currentLanguage));
 
+  updateBrandLabels();
+
   setTextById('splash-sub-text', t('typeDesigner'));
   setTextById('drawer-home-text', t('drawerHome'));
   setTextById('drawer-fonts-text', t('drawerFonts'));
@@ -1277,7 +1684,7 @@ function applyLanguage(language, persist = true) {
   setTextById('stats-sub-title', t('fontStatsTitle'));
   setTextById('edit-font-title', t('editFontTitle'));
   setTextById('edit-submit-btn', t('saveChanges'));
-  setTextById('admin-topbar-title', `${t('adminTitle')} — عُمَر حسَن`);
+  setTextById('admin-topbar-title', `${t('adminTitle')} — ${getBrandDisplayName()}`);
   setTextById('lang-ar-opt', t('langArabic'));
   setTextById('lang-ku-opt', t('langKurdish'));
   setTextById('lang-en-opt', t('langEnglish'));
@@ -1338,6 +1745,8 @@ function applyLanguage(language, persist = true) {
     ensurePublicFontsVisibility();
     if (pageType === 'font' && currentFontId) renderFontDetailPage(currentFontId, { trackView: false });
   }
+
+  try { updateSeoMetadata(); } catch (error) { console.error('updateSeoMetadata failed:', error); }
 }
 
 function resolveTheme(mode) {
@@ -1423,10 +1832,12 @@ function initSettingsPanel() {
 }
 
 function initUserPreferences() {
+  const params = new URLSearchParams(window.location.search);
+  const queryLang = normalizeLanguageCode(params.get('lang'), '');
   const savedLang = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-  const initialLang = savedLang ? normalizeLanguageCode(savedLang) : detectDeviceLanguage();
+  const initialLang = queryLang || (savedLang ? normalizeLanguageCode(savedLang) : detectDeviceLanguage());
 
-  applyLanguage(initialLang, false);
+  applyLanguage(initialLang, true);
   applyTheme('night', true);
 }
 
@@ -3365,6 +3776,7 @@ function navigateTo(routeKey, params = {}) {
 
   const route = PAGE_ROUTES[routeKey] || PAGE_ROUTES.home;
   const url = new URL(route, window.location.href);
+  url.searchParams.set('lang', currentLanguage);
   Object.entries(params).forEach(([key, value]) => {
     if (value === undefined || value === null || value === '') return;
     url.searchParams.set(key, String(value));
@@ -3561,6 +3973,7 @@ async function loadContent() {
 
     hydrateLazyImages();
     if (token && !isStaticMode) renderAdminLists();
+    try { updateSeoMetadata(); } catch (error) { console.error('updateSeoMetadata failed:', error); }
   } catch(e) {
     console.error(e);
     toast(t('contentLoadError'), true);
@@ -4290,6 +4703,8 @@ function renderFontDetailPage(id, options = {}) {
   // Apply font family to back button
   const backBtn = document.getElementById('font-detail-back');
   if (backBtn) backBtn.style.removeProperty('font-family');
+
+  try { updateSeoMetadata(font); } catch (error) { console.error('updateSeoMetadata failed:', error); }
 
   return true;
 }

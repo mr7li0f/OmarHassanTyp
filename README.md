@@ -69,8 +69,8 @@ Edit this file and commit changes:
 
 If you add new images/fonts, place them in:
 
-- data/<Font Name>/photos
-- data/<Font Name>/fonts
+- data/Font-Name/photos
+- data/Font-Name/fonts
 - data/All-Fonts (for all fonts ZIP)
 
 Then update corresponding paths in public/content.json.
