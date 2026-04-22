@@ -1,4 +1,5 @@
 let token = null;
+let authenticatedAdminUsername = '';
 let contentData = {};
 let currentFontId = null;
 let _pickerTarget = null;
@@ -27,6 +28,7 @@ const fontFilterState = { query: '', weight: 'all', license: 'all', price: 'all'
 
 const STATIC_CONTENT_URL = './content.json';
 const API_ROOT = '/api';
+const OWNER_ADMIN_USERNAME = 'ilirt8';
 const URL_SCHEME_RE = /^(?:https?:|data:|blob:|mailto:|tel:)/i;
 const URL_PROTOCOL_RELATIVE_RE = /^(?:[a-z]+:)?\/\//i;
 const LANGUAGE_STORAGE_KEY = 'oh_site_lang';
@@ -1193,6 +1195,49 @@ function setSavedVisitorName(value) {
   return clean;
 }
 
+function readStoredAdminToken() {
+  try {
+    const raw = String(localStorage.getItem('admin_token') || '').trim();
+    return raw || null;
+  } catch {
+    return null;
+  }
+}
+
+function decodeJwtPayload(rawToken) {
+  const tokenValue = String(rawToken || '').trim();
+  if (!tokenValue) return null;
+
+  const parts = tokenValue.split('.');
+  if (parts.length < 2) return null;
+
+  let payloadBase64 = String(parts[1] || '').replace(/-/g, '+').replace(/_/g, '/');
+  while (payloadBase64.length % 4) payloadBase64 += '=';
+
+  try {
+    const decoded = atob(payloadBase64);
+    const parsed = JSON.parse(decoded);
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function syncAuthenticatedAdminState() {
+  authenticatedAdminUsername = '';
+  if (!token) return;
+
+  const payload = decodeJwtPayload(token);
+  const username = String(payload?.username || '').trim();
+  if (!username) return;
+  authenticatedAdminUsername = username;
+}
+
+function isOwnerAdminAuthenticated() {
+  if (!token) return false;
+  return String(authenticatedAdminUsername || '').trim().toLowerCase() === OWNER_ADMIN_USERNAME;
+}
+
 function normalizeAdminUiPrefs(raw) {
   const normalized = {
     ...DEFAULT_ADMIN_UI_PREFS,
@@ -1532,7 +1577,32 @@ async function fetchVisitorCountRemote() {
   }
 }
 
+async function fetchVisitorCountFromApi() {
+  if (isStaticMode || window.location.protocol === 'file:') return null;
+
+  const response = await fetch(apiUrl('/visitor-count'), {
+    cache: 'no-store'
+  });
+
+  if (!response.ok) throw new Error(`Visitor API failed (${response.status})`);
+
+  const data = await safeJsonParse(response);
+  const value = Number(data?.totalVisits);
+  if (!Number.isFinite(value) || value < 0) throw new Error('Invalid visitor API payload');
+  return Math.round(value);
+}
+
+function canDisplayVisitorCount() {
+  return !isStaticMode && isOwnerAdminAuthenticated();
+}
+
 async function loadVisitorCount() {
+  const existingWrap = document.querySelector('.visitor-counter-wrap');
+  if (!canDisplayVisitorCount()) {
+    if (existingWrap) existingWrap.remove();
+    return;
+  }
+
   let countNode = document.getElementById('visitor-count-node');
   if (!countNode) {
     const homeSub = document.getElementById('home-sub-text');
@@ -1552,6 +1622,19 @@ async function loadVisitorCount() {
     setVisitorCountNode(cachedCount);
   } else {
     setVisitorCountNode('...');
+  }
+
+  if (!isStaticMode) {
+    try {
+      const apiCount = await fetchVisitorCountFromApi();
+      if (Number.isFinite(apiCount)) {
+        writeStoredVisitorCount(VISITOR_COUNT_CACHE_STORAGE_KEY, apiCount);
+        setVisitorCountNode(apiCount);
+        return;
+      }
+    } catch {
+      // Fall through to remote fallback providers.
+    }
   }
 
   // In local file:// previews, avoid external requests and keep a stable local fallback counter.
@@ -3308,9 +3391,28 @@ async function fetchStaticContentCandidates() {
 }
 
 async function fetchContentData() {
+  token = readStoredAdminToken();
+  syncAuthenticatedAdminState();
+
+  if (window.location.protocol !== 'file:') {
+    try {
+      const response = await fetch(apiUrl('/content'), { cache: 'no-store' });
+      if (response.ok) {
+        const parsed = await safeJsonParse(response);
+        if (isLikelyContentPayload(parsed)) {
+          isStaticMode = false;
+          cacheContentPayload(parsed);
+          return normalizeContentData(parsed);
+        }
+      }
+    } catch {
+      // Fall back to static payload resolution below.
+    }
+  }
+
   isStaticMode = true;
   token = null;
-  localStorage.removeItem('admin_token');
+  authenticatedAdminUsername = '';
 
   const staticData = await fetchStaticContentCandidates();
   const embeddedData = window.__EMBEDDED_CONTENT__;
@@ -3928,8 +4030,36 @@ document.querySelectorAll('.drawer-item').forEach(btn => {
 });
 
 const topbarLogoBtn = document.getElementById('topbar-logo');
+
+function attemptOpenAdminFromLogoTap() {
+  const now = Date.now();
+  adminTapHistory = adminTapHistory.filter(ts => (now - ts) <= ADMIN_TAP_WINDOW_MS);
+  adminTapHistory.push(now);
+
+  if (adminTapHistory.length < ADMIN_REQUIRED_TAPS) return false;
+
+  adminTapHistory = [];
+  if (isStaticMode) {
+    toast(t('featureUnavailable', { feature: t('featureAdmin') }), true);
+    return true;
+  }
+
+  if (token && isOwnerAdminAuthenticated()) {
+    openAdmin();
+    return true;
+  }
+
+  openLoginModal();
+  return true;
+}
+
 if (topbarLogoBtn) {
   topbarLogoBtn.addEventListener('click', () => {
+    if (attemptOpenAdminFromLogoTap()) {
+      closeDrawer();
+      return;
+    }
+
     closeDrawer();
     if (pageType === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -5136,9 +5266,11 @@ if (loginForm) loginForm.onsubmit = async e => {
     const data = await res.json();
     if (!res.ok) { err.textContent = data.error; err.classList.remove('hidden'); return; }
     token = data.token; localStorage.setItem('admin_token', token);
+    syncAuthenticatedAdminState();
     const modal = document.getElementById('login-modal');
     if (modal) modal.classList.add('hidden');
     openAdmin();
+    loadVisitorCount().catch(() => {});
   } catch { err.textContent = t('loginTryAgain'); err.classList.remove('hidden'); }
 };
 
@@ -5153,6 +5285,7 @@ function openAdmin() {
   syncAdminFontControlsUI();
   renderAdminLists();
   activateAdminTab(pageType === 'admin' ? 'fonts-tab' : 'social-tab');
+  loadVisitorCount().catch(() => {});
 }
 function closeAdmin() {
   if (pageType === 'admin') {
@@ -5165,12 +5298,14 @@ function closeAdmin() {
 const logoutBtn = document.getElementById('logout-btn');
 if (logoutBtn) logoutBtn.onclick = () => {
   token = null;
+  authenticatedAdminUsername = '';
   localStorage.removeItem('admin_token');
   if (pageType === 'admin') {
     navigateTo('home');
     return;
   }
   closeAdmin();
+  loadVisitorCount().catch(() => {});
 };
 
 function activateAdminTab(tabId) {
@@ -6043,7 +6178,7 @@ function toast(msg, isErr = false) {
   el.style.cssText = `position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
     background:${isErr?'#c0392b':'#1a1a1a'};color:#fff;padding:11px 22px;
     border:1px solid ${isErr?'#e74c3c':'#333'};border-radius:8px;
-    font-family:'Geeza Web','Geeza Pro','Geeza','Segoe UI',Tahoma,sans-serif;font-weight:500;font-size:0.92rem;
+    font-family:'Qahwa','Qahwa Salt','Segoe UI',Tahoma,sans-serif;font-weight:500;font-size:0.92rem;
     z-index:9999;box-shadow:0 4px 24px rgba(0,0,0,0.6);`;
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 2800);
