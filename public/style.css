@@ -59,8 +59,8 @@
   --border:  #1a1a1a;
   --border2: #272727;
   --topbar:  56px;
-  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-med:   'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
+  --font-med:   'Qahwa', 'Segoe UI', Tahoma, sans-serif;
 }
 
 html, body { height: 100%; }
@@ -949,9 +949,9 @@ textarea { min-height: 80px; resize: vertical; }
   --border2: #dbc8ad;
   --accent: #c56a44;
   --accent-2: #1f7a72;
-  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-med: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-latin: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
+  --font-med: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
+  --font-latin: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
 }
 
 body {
@@ -2539,9 +2539,9 @@ body.lang-ltr .src-url {
 
 /* ══════════════════════════ USER VISUAL REFINEMENT ══════════════════════════ */
 :root {
-  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-med: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-latin: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
+  --font-med: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
+  --font-latin: 'Qahwa', 'Segoe UI', Tahoma, sans-serif;
 }
 
 body,
@@ -2550,7 +2550,7 @@ input,
 select,
 textarea,
 .loading-tag {
-  font-family: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif !important;
+  font-family: 'Qahwa', 'Segoe UI', Tahoma, sans-serif !important;
   font-weight: 400;
 }
 
