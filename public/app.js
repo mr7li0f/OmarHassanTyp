@@ -237,7 +237,7 @@ const I18N = {
     downloadAllFontsZipPreparing: 'جاري تجهيز ZIP لكل الخطوط...',
     noDownloadFiles: 'لا توجد ملفات خطوط جاهزة للتحميل حالياً.',
     downloadDirectFailed: 'تعذّر تحميل الملف مباشرة. تأكد أن ملف الخط مرفوع داخل الموقع.',
-    filterWeight: 'الوزن',
+    filterWeight: 'الأوزان',
     filterLicense: 'الترخيص',
     filterPrice: 'النوع',
     filterAnyWeight: 'كل الأوزان',
@@ -1398,10 +1398,10 @@ function updateTopbarUserChip() {
 }
 
 function getSiteFooterText() {
-  const year = new Date().getFullYear();
-  if (currentLanguage === 'en') return `All rights reserved © Omar Hassan ${year}`;
-  if (currentLanguage === 'ku') return `هەموو مافەکان پارێزراون © عومەر حەسەن ${year}`;
-  return `جميع الحقوق محفوظة © عمر حسن ${year}`;
+  // Fixed footer text per request (Arabic shows 2026 explicitly)
+  if (currentLanguage === 'en') return `All rights reserved © Omar Hassan ${new Date().getFullYear()}`;
+  if (currentLanguage === 'ku') return `هەموو مافەکان پارێزراون © عومەر حەسەن ${new Date().getFullYear()}`;
+  return `جميع الحقوق محفوظة © عمر حسن 2026`;
 }
 
 function buildAccountRailIconLink(link, className) {
