@@ -1377,10 +1377,9 @@ function getFontPublicStats(fontId) {
 }
 
 function bumpFontPublicStat(fontId, field, amount = 1) {
-  const key = String(fontId);
-  if (!publicFontStatsById[key]) publicFontStatsById[key] = { views: 0, downloads: 0, uniqueDownloaders: 0 };
-  const current = Number(publicFontStatsById[key][field] || 0);
-  publicFontStatsById[key][field] = current + amount;
+  // Public statistics disabled for static/GitHub Pages deployment.
+  // Keep function present for compatibility but do not record counts.
+  return;
 }
 
 function updateTopbarUserChip() {
@@ -1597,67 +1596,10 @@ function canDisplayVisitorCount() {
 }
 
 async function loadVisitorCount() {
+  // Visitor counter removed — no UI or network calls in static mode.
   const existingWrap = document.querySelector('.visitor-counter-wrap');
-  if (!canDisplayVisitorCount()) {
-    if (existingWrap) existingWrap.remove();
-    return;
-  }
-
-  let countNode = document.getElementById('visitor-count-node');
-  if (!countNode) {
-    const homeSub = document.getElementById('home-sub-text');
-    if (homeSub) {
-      const wrap = document.createElement('div');
-      wrap.className = 'visitor-counter-wrap';
-      wrap.innerHTML = `<i class="fa-solid fa-eye"></i> <span id="visitor-count-node">...</span> <span id="visitor-count-label">${escapeHtml(t('visitorsLabel'))}</span>`;
-      homeSub.parentNode.insertBefore(wrap, homeSub.nextSibling);
-    }
-  }
-
-  const labelNode = document.getElementById('visitor-count-label');
-  if (labelNode) labelNode.textContent = t('visitorsLabel');
-
-  const cachedCount = readStoredVisitorCount(VISITOR_COUNT_CACHE_STORAGE_KEY);
-  if (Number.isFinite(cachedCount)) {
-    setVisitorCountNode(cachedCount);
-  } else {
-    setVisitorCountNode('...');
-  }
-
-  if (!isStaticMode) {
-    try {
-      const apiCount = await fetchVisitorCountFromApi();
-      if (Number.isFinite(apiCount)) {
-        writeStoredVisitorCount(VISITOR_COUNT_CACHE_STORAGE_KEY, apiCount);
-        setVisitorCountNode(apiCount);
-        return;
-      }
-    } catch {
-      // Fall through to remote fallback providers.
-    }
-  }
-
-  // In local file:// previews, avoid external requests and keep a stable local fallback counter.
-  if (window.location.protocol === 'file:') {
-    const localCount = getLocalVisitorFallbackCount();
-    setVisitorCountNode(localCount);
-    return;
-  }
-
-  if (navigator.onLine === false) {
-    const offlineFallback = Number.isFinite(cachedCount) ? cachedCount : getLocalVisitorFallbackCount();
-    setVisitorCountNode(offlineFallback);
-    return;
-  }
-
-  try {
-    const remoteCount = await fetchVisitorCountRemote();
-    writeStoredVisitorCount(VISITOR_COUNT_CACHE_STORAGE_KEY, remoteCount);
-    setVisitorCountNode(remoteCount);
-  } catch {
-    const fallbackCount = Number.isFinite(cachedCount) ? cachedCount : getLocalVisitorFallbackCount();
-    setVisitorCountNode(fallbackCount);
-  }
+  if (existingWrap) existingWrap.remove();
+  return null;
 }
 
 function ensureSiteFooter() {
@@ -2246,20 +2188,9 @@ async function downloadFileAsZip(downloadUrl, fontTitle) {
 }
 
 async function registerFontDownload(visitorName) {
-  if (!visitorName) return;
-
-  if (!isStaticMode && currentFontId) {
-    fetch(apiUrl(`/track-download/${currentFontId}`), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: visitorName })
-    }).catch(() => {});
-  }
-
-  if (currentFontId) {
-    bumpFontPublicStat(currentFontId, 'downloads', 1);
-    renderFontDetailPage(currentFontId, { trackView: false });
-  }
+  // Tracking and per-font download counters removed.
+  // Function kept for compatibility but intentionally does nothing.
+  return;
 }
 
 function getSourceFontsForDisplayFont(font) {
@@ -3394,22 +3325,7 @@ async function fetchContentData() {
   token = readStoredAdminToken();
   syncAuthenticatedAdminState();
 
-  if (window.location.protocol !== 'file:') {
-    try {
-      const response = await fetch(apiUrl('/content'), { cache: 'no-store' });
-      if (response.ok) {
-        const parsed = await safeJsonParse(response);
-        if (isLikelyContentPayload(parsed)) {
-          isStaticMode = false;
-          cacheContentPayload(parsed);
-          return normalizeContentData(parsed);
-        }
-      }
-    } catch {
-      // Fall back to static payload resolution below.
-    }
-  }
-
+  // Always use static mode for GitHub Pages
   isStaticMode = true;
   token = null;
   authenticatedAdminUsername = '';
@@ -3954,8 +3870,8 @@ window.addEventListener('load', async () => {
 });
 
 function trackVisit() {
-  if (isStaticMode) return;
-  fetch(apiUrl('/track-visit'), { method: 'POST' }).catch(() => {});
+  // Visitor tracking removed — no-op for static deployment
+  return;
 }
 
 /* ── SECTION SWITCHING ── */
@@ -4625,13 +4541,7 @@ function renderFontDetailPage(id, options = {}) {
   const activeFontId = Number(font.id);
   if (!Number.isFinite(activeFontId)) return false;
 
-  const shouldTrackView = options.trackView !== false;
   currentFontId = activeFontId;
-  if (shouldTrackView && !isStaticMode) {
-    fetch(apiUrl(`/track-font/${activeFontId}`), { method: 'POST' }).catch(() => {});
-  }
-  if (shouldTrackView) bumpFontPublicStat(activeFontId, 'views', 1);
-
   const family = font.fontFile ? fontFamilyName(font.id) : 'Qahwa';
   const familyCSS = `'${family}', serif`;
 
@@ -4672,19 +4582,7 @@ function renderFontDetailPage(id, options = {}) {
     descsWrap.style.display = localizedDescription ? '' : 'none';
   }
 
-  const usageStats = getFontPublicStats(font.id);
-  let usageStatsEl = document.getElementById('fd-usage-stats');
-  if (!usageStatsEl && descsWrap?.parentNode) {
-    usageStatsEl = document.createElement('div');
-    usageStatsEl.id = 'fd-usage-stats';
-    usageStatsEl.className = 'fd-usage-stats';
-    descsWrap.parentNode.insertBefore(usageStatsEl, descsWrap.nextSibling);
-  }
-  if (usageStatsEl) {
-    usageStatsEl.innerHTML = `
-      <span class="fd-usage-pill"><i class="fa-solid fa-eye"></i> ${formatLocalizedNumber(usageStats.views)} ${t('viewsShort')}</span>
-      <span class="fd-usage-pill"><i class="fa-solid fa-download"></i> ${formatLocalizedNumber(usageStats.downloads)} ${t('downloadsShort')}</span>`;
-  }
+  // Removed per-font usage stats (views/downloads) from detail page
 
   const images = getFontImages(font);
   detailGalleryImages = images;
@@ -6190,3 +6088,5 @@ initIconPicker();
 initImageViewer();
 initSettingsPanel();
 initUserPreferences();
+
+

@@ -59,13 +59,13 @@
   --border:  #1a1a1a;
   --border2: #272727;
   --topbar:  56px;
-  --font-black: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
-  --font-med:   'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-med:   'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
 }
 
 html, body { height: 100%; }
 body {
-  font-family: var(--font-med); font-weight: 400;
+  font-family: var(--font-med); font-weight: 700;
   background: var(--bg); color: var(--text); direction: rtl;
 }
 .hidden { display: none !important; }
@@ -949,7 +949,7 @@ textarea { min-height: 80px; resize: vertical; }
   --border2: #dbc8ad;
   --accent: #c56a44;
   --accent-2: #1f7a72;
-  --font-black: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
   --font-med: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
   --font-latin: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
 }
@@ -2539,7 +2539,7 @@ body.lang-ltr .src-url {
 
 /* ══════════════════════════ USER VISUAL REFINEMENT ══════════════════════════ */
 :root {
-  --font-black: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
+  --font-black: 'Qahwa', 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
   --font-med: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
   --font-latin: 'Geeza Web', 'Geeza Pro', 'Geeza', 'Segoe UI', Tahoma, sans-serif;
 }
