@@ -1,8 +1,7 @@
 backend:
-  name: github
+  name: git-gateway
   repo: mr7li0f/OmarHassanTyp
   branch: main
-  site_domain: "fe1d694c-8567-47ad-b3cf-fbe6561c05f6"
   
 publish_mode: editorial_workflow
 media_folder: public/data
