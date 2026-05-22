@@ -26,52 +26,69 @@ collections:
           - { label: "رابط بهانس (Behance)", name: "behance_url", widget: "string", required: false }
 
   - name: "fonts_management"
-    label: "إدارة معرض الخطوط"
+    label: "🖊️ إدارة معرض الخطوط"
     delete: true
     editor:
       preview: false
     files:
       - name: "font_list"
-        label: "قائمة الخطوط الحالية"
+        label: "📋 قائمة الخطوط الحالية"
         file: "public/content.json"
         fields:
           - name: "fonts"
             label: "الخطوط المتاحة في المعرض"
             widget: "list"
-            summary: "{{fields.name}} — {{fields.id}}"
+            summary: "{{fields.name}} ({{fields.id}})"
+            identifier_field: "id"
             delete: true
+            sort: true
             fields:
+              # الأساسيات
               - { label: "اسم الخط العربي", name: "name", widget: "string", required: true }
               - { label: "الاسم اللاتيني (المعرف)", name: "id", widget: "string", required: true }
               - { label: "الوصف بالعربية", name: "description_ar", widget: "text", required: true }
               - { label: "الوصف بالإنجليزية", name: "description_en", widget: "text", required: true }
               - { label: "الوصف بالكردية", name: "description_ku", widget: "text", required: false }
               - { label: "نص المعاينة الافتراضي", name: "preview_text", widget: "string", required: false, default: "الملك لله وحده" }
-              - label: "صورة الغلاف (تظهر في البطاقات)"
+
+              # الصور
+              - label: "🖼️ صورة الغلاف"
                 name: "image"
                 widget: "image"
                 required: false
-                hint: "صورة الغلاف الرئيسية للخط (اختياري — أول صورة في قائمة البوسترات تستخدم كغلاف)"
-              - label: "معرض الصور (بوسترات)"
+                hint: "صورة الغلاف الرئيسية للخط — تظهر في بطاقة العرض"
+              - label: "📷 معرض الصور (بوسترات إضافية)"
                 name: "images"
                 widget: "list"
                 required: false
-                summary: "{{fields.url}}"
+                summary: "📸 {{fields.url}}"
                 field: { label: "رابط الصورة", name: "url", widget: "string" }
-              - { label: "رابط تحميل الخط الأساسي (.otf / .ttf)", name: "downloadUrl", widget: "string", required: false }
-              - { label: "ملف الخط للمعاينة المباشرة", name: "fontFile", widget: "string", required: false }
-              - { label: "حزمة ZIP مضغوطة (اختياري)", name: "zipUrl", widget: "string", required: false }
-              - label: "الأوزان المتاحة"
+
+              # روابط التحميل والمعاينة
+              - label: "📥 روابط التحميل"
+                name: "downloadUrls"
+                widget: "object"
+                required: false
+                summary: "روابط التحميل والمعاينة"
+                hint: "روابط التحميل للملفات الرئيسية"
+                fields:
+                  - { label: "ربط تحميل الخط الأساسي (.otf / .ttf)", name: "downloadUrl", widget: "string", required: false }
+                  - { label: "ملف الخط للمعاينة المباشرة", name: "fontFile", widget: "string", required: false }
+                  - { label: "📦 حزمة ZIP مضغوطة كاملة", name: "zipUrl", widget: "string", required: false }
+
+              # الأوزان وملفاتها
+              - label: "⚖️ الأوزان المتاحة"
                 name: "weights"
                 widget: "list"
                 required: false
-                summary: "{{fields.weight}}"
+                summary: "🔤 {{fields.weight}}"
                 field: { label: "الوزن", name: "weight", widget: "string" }
-              - label: "ملفات الأوزان"
+              - label: "📁 ملفات الأوزان"
                 name: "weightFiles"
                 widget: "object"
                 required: false
-                summary: "ملفات الأوزان"
+                summary: "ملفات الأوزان لكل وزن"
+                hint: "ارفع ملف الخط الخاص بكل وزن (اختياري)"
                 fields:
                   - { label: "Light", name: "Light", widget: "string", required: false }
                   - { label: "Regular", name: "Regular", widget: "string", required: false }
@@ -79,33 +96,42 @@ collections:
                   - { label: "Bold", name: "Bold", widget: "string", required: false }
                   - { label: "Black", name: "Black", widget: "string", required: false }
                   - { label: "Salt", name: "Salt", widget: "string", required: false }
-              - { label: "خط جديد؟", name: "isNew", widget: "boolean", default: true, required: false }
-              - { label: "الترخيص", name: "license", widget: "string", required: false, hint: "مثال: Personal Use, Open Source, Commercial" }
-              - label: "الأوزان المجانية (لفصل المدفوع/المجاني)"
-                name: "freeWeights"
-                widget: "string"
+
+              # الترخيص والتصنيف
+              - label: "💰 التصنيف التجاري"
+                name: "pricing"
+                widget: "object"
                 required: false
-                hint: "أدخل الأوزان مفصولة بفاصلة"
-              - label: "الأوزان المدفوعة"
-                name: "paidWeights"
-                widget: "string"
-                required: false
-                hint: "أدخل الأوزان مفصولة بفاصلة"
-              - label: "الخط مدفوع؟"
-                name: "isPaid"
-                widget: "boolean"
-                default: false
-                required: false
-              - { label: "السعر ($)", name: "price", widget: "number", value_type: "int", required: false, default: 0 }
+                summary: "التصنيف التجاري والسعر"
+                hint: "حدد إذا كان الخط مجاني أم مدفوع وأسعار الأوزان"
+                fields:
+                  - { label: "🔓 الخط مجاني؟", name: "isPaid", widget: "boolean", default: false, required: false }
+                  - { label: "💵 السعر ($)", name: "price", widget: "number", value_type: "int", required: false, default: 0 }
+                  - { label: "الترخيص", name: "license", widget: "string", required: false, hint: "مثال: Personal Use, Commercial, Open Source" }
+                  - label: "الأوزان المجانية"
+                    name: "freeWeights"
+                    widget: "list"
+                    required: false
+                    summary: "🆓 {{fields.weight}}"
+                    field: { label: "وزن مجاني", name: "weight", widget: "string" }
+                  - label: "الأوزان المدفوعة"
+                    name: "paidWeights"
+                    widget: "list"
+                    required: false
+                    summary: "💲 {{fields.weight}}"
+                    field: { label: "وزن مدفوع", name: "weight", widget: "string" }
+
+              # حالة الخط
+              - { label: "🆕 خط جديد؟", name: "isNew", widget: "boolean", default: true, required: false }
 
   - name: "social_links"
-    label: "روابط التواصل الاجتماعي"
+    label: "🔗 روابط التواصل الاجتماعي"
     delete: true
     editor:
       preview: false
     files:
       - name: "social_list"
-        label: "الحسابات المتصلة"
+        label: "📱 الحسابات المتصلة"
         file: "public/content.json"
         fields:
           - name: "socialLinks"
@@ -113,8 +139,9 @@ collections:
             widget: "list"
             summary: "{{fields.platform}}"
             delete: true
+            sort: true
             fields:
               - { label: "اسم المنصة", name: "platform", widget: "string", required: true }
               - { label: "الرابط", name: "url", widget: "string", required: true }
-              - { label: "أيقونة SVG", name: "icon_svg", widget: "text", required: false }
-              - { label: "ترتيب الظهور", name: "sort_order", widget: "number", value_type: "int", required: false, default: 0 }
+              - { label: "رمز SVG مخصص (اختياري)", name: "icon_svg", widget: "text", required: false }
+              - { label: "🔢 ترتيب الظهور", name: "sort_order", widget: "number", value_type: "int", required: false, default: 0 }
