@@ -30,6 +30,7 @@
         "Bold": "/data/qahwa/fonts/Qahwa Arabic Bold.otf",
         "Black": "/data/qahwa/fonts/QahwaArabicBlack.otf"
       },
+      "zipUrl": "/data/qahwa/fonts/Qahwa-fonts.zip",
       "isNew": false
     },
     {
@@ -76,6 +77,7 @@
         "Regular": "/data/Engineer Font/fonts/Engineer Regular.otf",
         "Salt": "/data/Engineer Font/fonts/Engineer-Salt.otf"
       },
+      "zipUrl": "/data/Engineer Font/fonts/Engineer-fonts.zip",
       "isNew": true
     }
   ],

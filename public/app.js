@@ -1274,7 +1274,6 @@ function saveAdminUiPrefs(nextPrefs = adminUiPrefs) {
   try {
     localStorage.setItem(ADMIN_UI_PREFS_STORAGE_KEY, JSON.stringify(adminUiPrefs));
   } catch {
-    // Ignore storage errors.
   }
   return adminUiPrefs;
 }
@@ -1307,7 +1306,6 @@ function saveAdminFontViewState(nextState = adminFontViewState) {
   try {
     localStorage.setItem(ADMIN_FONT_VIEW_STORAGE_KEY, JSON.stringify(adminFontViewState));
   } catch {
-    // Ignore storage errors.
   }
   return adminFontViewState;
 }
@@ -1334,7 +1332,6 @@ function setUserPreviewPhrase(value) {
       localStorage.removeItem(USER_PREVIEW_PHRASE_STORAGE_KEY);
     }
   } catch {
-    // Ignore storage errors.
   }
   return normalized;
 }
@@ -1377,8 +1374,6 @@ function getFontPublicStats(fontId) {
 }
 
 function bumpFontPublicStat(fontId, field, amount = 1) {
-  // Public statistics disabled for static/GitHub Pages deployment.
-  // Keep function present for compatibility but do not record counts.
   return;
 }
 
@@ -1398,7 +1393,6 @@ function updateTopbarUserChip() {
 }
 
 function getSiteFooterText() {
-  // Fixed footer text per request (Arabic shows 2026 explicitly)
   if (currentLanguage === 'en') return `All rights reserved © Omar Hassan ${new Date().getFullYear()}`;
   if (currentLanguage === 'ku') return `هەموو مافەکان پارێزراون © عومەر حەسەن ${new Date().getFullYear()}`;
   return `جميع الحقوق محفوظة © عمر حسن 2026`;
@@ -1479,7 +1473,6 @@ function writeStoredVisitorCount(key, value) {
   try {
     localStorage.setItem(key, String(Math.round(numeric)));
   } catch {
-    // Ignore storage write failures.
   }
 }
 
@@ -1495,7 +1488,6 @@ function markVisitorHitThisSession() {
   try {
     sessionStorage.setItem(VISITOR_COUNT_HIT_SESSION_KEY, '1');
   } catch {
-    // Ignore storage write failures.
   }
 }
 
@@ -1528,7 +1520,6 @@ function getLocalVisitorFallbackCount() {
     try {
       sessionStorage.setItem(VISITOR_COUNT_LOCAL_SESSION_KEY, '1');
     } catch {
-      // Ignore storage write failures.
     }
   }
 
@@ -1596,7 +1587,6 @@ function canDisplayVisitorCount() {
 }
 
 async function loadVisitorCount() {
-  // Visitor counter removed — no UI or network calls in static mode.
   const existingWrap = document.querySelector('.visitor-counter-wrap');
   if (existingWrap) existingWrap.remove();
   return null;
@@ -1762,7 +1752,6 @@ function applyLanguage(language, persist = true) {
     try { renderSocial(); } catch (error) { console.error('renderSocial failed:', error); }
     try { renderAccountRails(); } catch (error) { console.error('renderAccountRails failed:', error); }
     loadVisitorCount().catch(error => console.error('loadVisitorCount failed:', error));
-    // renderWorkSocial();
     ensureAdminFontControls();
     syncAdminFontControlsUI();
     ensureAdvancedFontControls();
@@ -2117,7 +2106,6 @@ async function ensureJsZipAvailable() {
           await loadExternalScript(url, 'jszip');
           if (window.JSZip && typeof window.JSZip === 'function') return true;
         } catch {
-          // Try the next source.
         }
       }
 
@@ -2158,7 +2146,6 @@ async function downloadFileAsZip(downloadUrl, fontTitle) {
   } catch (error) {
     console.error(error);
 
-    // Some environments block fetch for binary files while direct navigation still succeeds.
     try {
       const fallbackExt = String(extensionFromUrl || '').toLowerCase();
       const canOpenDirect = ['.otf', '.ttf', '.woff', '.woff2', '.zip'].includes(fallbackExt)
@@ -2180,7 +2167,6 @@ async function downloadFileAsZip(downloadUrl, fontTitle) {
         return true;
       }
     } catch {
-      // Fall back to hard failure below.
     }
 
     return false;
@@ -2188,8 +2174,6 @@ async function downloadFileAsZip(downloadUrl, fontTitle) {
 }
 
 async function registerFontDownload(visitorName) {
-  // Tracking and per-font download counters removed.
-  // Function kept for compatibility but intentionally does nothing.
   return;
 }
 
@@ -2564,7 +2548,6 @@ async function downloadFileDirect(downloadUrl, suggestedName) {
         return true;
       }
     } catch {
-      // Fall through to hard failure.
     }
 
     return false;
@@ -2600,7 +2583,6 @@ async function buildZipFromEntries(entries, zipName) {
       zip.file(target, blob);
       added += 1;
     } catch {
-      // Skip failing files and continue building the archive.
     }
   }
 
@@ -2730,10 +2712,8 @@ function resolveAssetUrl(value) {
     const pageDir = (pathname.endsWith('/') ? pathname : pathname.replace(/[^/]*$/, '/')).replace(/\/+$/, '/');
     const isFilePublicPath = window.location.protocol === 'file:' && pageDir.toLowerCase().includes('/public/');
 
-    // If page is served from /public/, assets usually live one level up (../data/*).
     if (/\/public\/$/i.test(pageDir) || isFilePublicPath) return `../${relativePath}`;
 
-    // For GitHub Pages subpaths (e.g., /repo/home.html), keep assets relative to current folder.
     return `./${relativePath}`;
   }
   return clean;
@@ -3218,7 +3198,6 @@ function getContentPayloadScore(raw) {
   const socialCount = Array.isArray(raw?.socialLinks) ? raw.socialLinks.length : 0;
   const workCount = Array.isArray(raw?.workLinks) ? raw.workLinks.length : 0;
 
-  // Fonts are the critical dataset, so they get the highest weight.
   return (fontsCount * 10000) + (socialCount * 100) + workCount;
 }
 
@@ -3242,7 +3221,6 @@ function cacheContentPayload(raw) {
   try {
     localStorage.setItem(CONTENT_CACHE_STORAGE_KEY, JSON.stringify(raw));
   } catch {
-    // Ignore storage write errors in private mode/quota limits.
   }
 }
 
@@ -3314,7 +3292,6 @@ async function fetchStaticContentCandidates() {
         return parsed;
       }
     } catch {
-      // Try the next candidate.
     }
   }
 
@@ -3325,7 +3302,6 @@ async function fetchContentData() {
   token = readStoredAdminToken();
   syncAuthenticatedAdminState();
 
-  // Always use static mode for GitHub Pages
   isStaticMode = true;
   token = null;
   authenticatedAdminUsername = '';
@@ -3707,7 +3683,6 @@ function injectFontFaces(fonts) {
 
     const fallbackSource = resolveAssetUrl(font?.fontFile || uniqueSources[0] || weightedUnique[0]?.source || '');
     if (!fallbackSource) return;
-    // Single source file: keep one normal face so browser can synthesize other weights in preview.
     rules.push(buildRule(family, fallbackSource, '400'));
   });
 
@@ -3807,7 +3782,6 @@ function navigateTo(routeKey, params = {}) {
   try {
     sessionStorage.setItem(PAGE_TRANSITION_STORAGE_KEY, '1');
   } catch {
-    // Ignore storage limitations.
   }
 
   document.body.classList.add('page-transition-leave');
@@ -3870,7 +3844,6 @@ window.addEventListener('load', async () => {
 });
 
 function trackVisit() {
-  // Visitor tracking removed — no-op for static deployment
   return;
 }
 
@@ -4001,17 +3974,14 @@ async function loadContent() {
     await loadPublicFontStats();
     setHomeMetrics();
 
-    // Render font content first so home/fonts pages don't appear empty.
     applyActiveFontFilters();
     ensurePublicFontsVisibility();
     if (pageType !== 'font') initHomeSlider();
     bindRandomFontButton();
 
-    // Secondary widgets are best-effort and must not block primary content rendering.
     try { renderSocial(); } catch (error) { console.error('renderSocial failed:', error); }
     try { renderAccountRails(); } catch (error) { console.error('renderAccountRails failed:', error); }
     loadVisitorCount().catch(error => console.error('loadVisitorCount failed:', error));
-    // renderWorkSocial();
     try { ensureAdvancedFontControls(); } catch (error) { console.error('ensureAdvancedFontControls failed:', error); }
     try { initWeightFileBuilders(); } catch (error) { console.error('initWeightFileBuilders failed:', error); }
     try { initSearch(); } catch (error) { console.error('initSearch failed:', error); }
@@ -4545,7 +4515,6 @@ function renderFontDetailPage(id, options = {}) {
   const family = font.fontFile ? fontFamilyName(font.id) : 'Qahwa';
   const familyCSS = `'${family}', serif`;
 
-  // Apply font family to entire detail page
   const detailPage = document.querySelector('.font-detail-page');
   if (detailPage) detailPage.style.fontFamily = familyCSS;
 
@@ -4582,14 +4551,11 @@ function renderFontDetailPage(id, options = {}) {
     descsWrap.style.display = localizedDescription ? '' : 'none';
   }
 
-  // Removed per-font usage stats (views/downloads) from detail page
-
   const images = getFontImages(font);
   detailGalleryImages = images;
   detailGalleryTitle = font.title || '';
   detailGalleryActiveIndex = 0;
 
-  // Remove legacy top slider from font detail view; keep one gallery only.
   const legacySliderWrap = document.getElementById('home-slider-wrap');
   if (legacySliderWrap) legacySliderWrap.classList.add('hidden');
 
@@ -4728,7 +4694,6 @@ function renderFontDetailPage(id, options = {}) {
     downloadWrap.classList.add('hidden');
   }
 
-  // Apply font family to back button
   const backBtn = document.getElementById('font-detail-back');
   if (backBtn) backBtn.style.removeProperty('font-family');
 
@@ -5363,7 +5328,6 @@ if (saveWorkSocialBtn) saveWorkSocialBtn.onclick = async () => {
     if (!res.ok) throw new Error();
     contentData.workLinks = updated;
     renderAccountRails();
-    // renderWorkSocial();
     toast(t('saveSuccess'));
   } catch { toast(t('saveFail'), true); }
 };

@@ -1,8 +1,8 @@
 (function () {
   const labels = {
-    ar: { title: 'عمر حسن | Loading', name: 'عمر حسن', sub: 'جاري تجهيز مكتبة الخطوط...' },
-    ku: { title: 'عومەر حەسەن | Loading', name: 'عومەر حەسەن', sub: 'ئامادەکردنی کتێبخانەی فۆنت...' },
-    en: { title: 'Omar Hassan | Loading', name: 'Omar Hassan', sub: 'Preparing type library...' }
+    ar: { title: 'عمر حسن | Loading', name: 'عمر حسن' },
+    ku: { title: 'عومەر حەسەن | Loading', name: 'عومەر حەسەن' },
+    en: { title: 'Omar Hassan | Loading', name: 'Omar Hassan' }
   };
 
   const pickLang = () => {
@@ -29,11 +29,9 @@
   const currentLabel = labels[lang] || labels.ar;
   const splashName = document.querySelector('.splash-name');
   const splashLogo = document.getElementById('splash-logo');
-  const sub = document.getElementById('loading-sub');
   document.title = currentLabel.title;
   if (splashName) splashName.textContent = currentLabel.name;
   if (splashLogo) splashLogo.alt = currentLabel.name;
-  if (sub) sub.textContent = currentLabel.sub;
 
   setTimeout(() => {
     window.location.replace(`./home.html?v=20260418.8&lang=${encodeURIComponent(lang)}`);
