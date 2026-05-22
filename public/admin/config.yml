@@ -3,56 +3,25 @@ backend:
   repo: mr7li0f/OmarHassanTyp
   branch: main
 
-local_backend: true
-
-publish_mode: simple
+media_folder: "public/assets"
+public_folder: "/public/assets"
 
 collections:
-  - name: content
-    label: إدارة المحتوى
+  - name: "fonts"
+    label: "الخطوط"
+    delete: false
+    editor:
+      preview: false
     files:
-      - file: public/content.json
-        label: الخطوط
-        name: fonts
+      - name: "font_list"
+        label: "قائمة الخطوط"
+        file: "public/content.json"
         fields:
-          - widget: list
-            name: fonts
-            label: الخطوط
-            label_singular: خط
-            summary: "{{fields.title}} ({{fields.title_en}})"
+          - name: "fonts"
+            label: "الخطوط المتاحة"
+            widget: "list"
             fields:
-              - { label: "المعرف", name: "id", widget: number, value_type: int, required: false }
-              - { label: "الاسم (عربي)", name: title, widget: string }
-              - { label: "الاسم (إنجليزي)", name: title_en, widget: string }
-              - { label: "الوصف (عربي)", name: description_ar, widget: text }
-              - { label: "الوصف (إنجليزي)", name: description_en, widget: text }
-              - { label: "الوصف (كردي)", name: description_ku, widget: text, required: false }
-              - { label: "رابط ملف الخط", name: downloadUrl, widget: string }
-              - { label: "رابط ZIP", name: zipUrl, widget: string, required: false }
-              - label: صور البوسترات
-                name: images
-                widget: list
-                summary: "{{fields.path}}"
-                field: { label: "رابط الصورة", name: path, widget: string }
-              - label: الأوزان
-                name: weights
-                widget: list
-                summary: "{{fields.weight}}"
-                field: { label: "الوزن", name: weight, widget: string }
-              - { label: "جديد؟", name: isNew, widget: boolean, required: false }
-
-      - file: public/content.json
-        label: روابط التواصل
-        name: social
-        fields:
-          - widget: list
-            name: socialLinks
-            label: روابط التواصل
-            label_singular: رابط
-            summary: "{{fields.platform}}"
-            fields:
-              - { label: "المنصة", name: platform, widget: string }
-              - { label: "الرابط", name: url, widget: string }
-              - { label: "الأيقونة (default)", name: icon, widget: string, required: false }
-              - { label: "كود SVG", name: icon_svg, widget: text, required: false }
-              - { label: "الترتيب", name: sort_order, widget: number, value_type: int, required: false }
+              - { label: "اسم الخط", name: "name", widget: "string" }
+              - { label: "الوصف", name: "description", widget: "text" }
+              - { label: "صورة الخط", name: "image", widget: "image" }
+              - { label: "ملف الخط ZIP", name: "file", widget: "file" }
