@@ -7,21 +7,87 @@ media_folder: "public/assets"
 public_folder: "/public/assets"
 
 collections:
-  - name: "fonts"
-    label: "الخطوط"
+  - name: "site_settings"
+    label: "إعدادات الموقع العامة"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "البيانات الأساسية والتواصل"
+        file: "public/settings.json"
+        fields:
+          - { label: "عنوان الموقع الرئيسي", name: "site_title", widget: "string", required: true }
+          - { label: "الاسم التجاري / التوقيع", name: "brand_name", widget: "string", required: true }
+          - { label: "وصف الموقع المصغر (SEO)", name: "site_description", widget: "text", required: false }
+          - { label: "نص الترحيب بالهيدر", name: "hero_text", widget: "string", required: false }
+          - { label: "رابط تليجرام المباشر", name: "telegram_url", widget: "string", required: false }
+          - { label: "رابط واتساب المباشر", name: "whatsapp_url", widget: "string", required: false }
+          - { label: "رابط بهانس (Behance)", name: "behance_url", widget: "string", required: false }
+
+  - name: "fonts_management"
+    label: "إدارة معرض الخطوط"
     delete: false
     editor:
       preview: false
     files:
       - name: "font_list"
-        label: "قائمة الخطوط"
+        label: "قائمة الخطوط الحالية"
         file: "public/content.json"
         fields:
           - name: "fonts"
-            label: "الخطوط المتاحة"
+            label: "الخطوط المتاحة في المعرض"
             widget: "list"
+            summary: "{{fields.name}} — {{fields.id}}"
             fields:
-              - { label: "اسم الخط", name: "name", widget: "string" }
-              - { label: "الوصف", name: "description", widget: "text" }
-              - { label: "صورة الخط", name: "image", widget: "image" }
-              - { label: "ملف الخط ZIP", name: "file", widget: "file" }
+              - { label: "اسم الخط العربي", name: "name", widget: "string", required: true }
+              - { label: "الاسم اللاتيني (المعرف)", name: "id", widget: "string", required: true }
+              - { label: "الوصف بالعربية", name: "description_ar", widget: "text", required: true }
+              - { label: "الوصف بالإنجليزية", name: "description_en", widget: "text", required: true }
+              - { label: "الوصف بالكردية", name: "description_ku", widget: "text", required: false }
+              - { label: "نص المعاينة الافتراضي", name: "preview_text", widget: "string", required: false, default: "الملك لله وحده" }
+              - label: "صور البوسترات"
+                name: "images"
+                widget: "list"
+                summary: "{{fields.path}}"
+                field: { label: "رابط الصورة", name: "path", widget: "image", required: false }
+              - label: "الأوزان المتاحة"
+                name: "weights"
+                widget: "list"
+                summary: "{{fields.weight}}"
+                field: { label: "الوزن", name: "weight", widget: "string" }
+              - label: "ملفات الأوزان"
+                name: "weightFiles"
+                widget: "object"
+                summary: "ملفات الأوزان"
+                fields:
+                  - { label: "وزن خفيف (Light)", name: "Light", widget: "file", required: false }
+                  - { label: "وزن عادي (Regular)", name: "Regular", widget: "file", required: false }
+                  - { label: "وزن متوسط (Medium)", name: "Medium", widget: "file", required: false }
+                  - { label: "وزن غامق (Bold)", name: "Bold", widget: "file", required: false }
+                  - { label: "وزن أسود (Black)", name: "Black", widget: "file", required: false }
+                  - { label: "وزن ملح (Salt)", name: "Salt", widget: "file", required: false }
+              - { label: "رابط تحميل الخط الأساسي", name: "downloadUrl", widget: "file", required: false }
+              - { label: "ملف الخط للمعاينة", name: "fontFile", widget: "file", required: false }
+              - { label: "حزمة ZIP كاملة", name: "zipUrl", widget: "file", required: true }
+              - { label: "خط جديد؟", name: "isNew", widget: "boolean", default: true, required: false }
+
+  - name: "social_links"
+    label: "روابط التواصل الاجتماعي"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "social_list"
+        label: "الحسابات المتصلة"
+        file: "public/content.json"
+        fields:
+          - name: "socialLinks"
+            label: "الروابط"
+            widget: "list"
+            summary: "{{fields.platform}}"
+            fields:
+              - { label: "اسم المنصة", name: "platform", widget: "string", required: true }
+              - { label: "الرابط", name: "url", widget: "string", required: true }
+              - { label: "أيقونة SVG", name: "icon_svg", widget: "text", required: false }
+              - { label: "ترتيب الظهور", name: "sort_order", widget: "number", value_type: "int", required: false, default: 0 }
