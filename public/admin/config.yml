@@ -1,11 +1,11 @@
 backend:
-  name: github
+  name: git-gateway
   repo: mr7li0f/OmarHassanTyp
   branch: main
 
-publish_mode: editorial_workflow
-media_folder: public/data
-public_folder: /data
+local_backend: true
+
+publish_mode: simple
 
 collections:
   - name: content
