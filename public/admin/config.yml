@@ -57,7 +57,7 @@ collections:
                 widget: "list"
                 required: false
                 summary: "{{fields.url}}"
-                field: { label: "رابط الصورة", widget: "string" }
+                field: { label: "رابط الصورة", name: "url", widget: "string" }
               - { label: "رابط تحميل الخط الأساسي (.otf / .ttf)", name: "downloadUrl", widget: "string", required: false }
               - { label: "ملف الخط للمعاينة المباشرة", name: "fontFile", widget: "string", required: false }
               - { label: "حزمة ZIP مضغوطة (اختياري)", name: "zipUrl", widget: "string", required: false }
