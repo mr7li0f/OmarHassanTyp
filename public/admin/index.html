@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>لوحة التحكم | عمر حسن</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    localStorage.setItem('netlifySiteURL', 'https://omarhassantype.netlify.app');
+  </script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
@@ -17,10 +20,6 @@
           });
         }
       });
-    }
-
-    window.onload = function() {
-      localStorage.setItem('netlifySiteURL', 'https://omarhassantype.netlify.app');
     }
   </script>
 </body>
