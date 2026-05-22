@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: mr7li0f/OmarHassanTyp
   branch: main
 
 publish_mode: editorial_workflow
