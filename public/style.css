@@ -747,7 +747,7 @@ body[data-page='loading'] .splash-name {color: #ffffff;}
 
 .download-weights-actions {margin-top: 10px;}
 
-.font-card-media img {object-fit: cover; object-position: center center;}
+.font-card-media img {object-fit: contain; object-position: center center;}
 
 .font-card-stats {display: none;}
 
@@ -1027,7 +1027,7 @@ body.lang-ltr .home-title, body.lang-ltr .drawer-title {direction: ltr; unicode-
 
 #fd-images .fd-shot, #fd-images .fd-shot-hero, #fd-images .fd-shot-wide, #fd-images .fd-shot-tall {grid-column: auto; aspect-ratio: auto; min-height: 220px; max-height: none; border: 1px solid #2c2c2c; border-radius: 14px; background: #090909; padding: 10px;}
 
-#fd-images .fd-shot img, #fd-images .fd-shot-hero img, #fd-images .fd-shot-wide img, #fd-images .fd-shot-tall img {width: 100%; height: auto; max-height: 78vh; object-fit: cover; object-position: center center;}
+#fd-images .fd-shot img, #fd-images .fd-shot-hero img, #fd-images .fd-shot-wide img, #fd-images .fd-shot-tall img {width: 100%; height: auto; max-height: 78vh; object-fit: contain; object-position: center center;}
 
 .image-viewer-stage {width: min(96vw, 1200px); max-height: 86vh;}
 
