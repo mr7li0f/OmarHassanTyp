@@ -4512,6 +4512,7 @@ function renderFontDetailPage(id, options = {}) {
   if (!Number.isFinite(activeFontId)) return false;
 
   currentFontId = activeFontId;
+  document.body.dataset.fontId = String(activeFontId);
   const family = font.fontFile ? fontFamilyName(font.id) : 'Qahwa';
   const familyCSS = `'${family}', serif`;
 
