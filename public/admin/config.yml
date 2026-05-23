@@ -1,8 +1,7 @@
 backend:
-  name: github
+  name: git-gateway
   repo: mr7li0f/OmarHassanTyp
   branch: main
-  auth_type: implicit
 
 media_folder: "public/assets"
 public_folder: "/public/assets"
