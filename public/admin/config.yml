@@ -1,4 +1,4 @@
-﻿backend:
+backend:
   name: github
   repo: mr7li0f/OmarHassanTyp
   branch: main
