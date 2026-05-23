@@ -2,5 +2,5 @@
   name: github
   repo: mr7li0f/OmarHassanTyp
   branch: main
-  base_url: https://github-auth-gate.your-subdomain.workers.dev
+  base_url: https://rapid-dawn-98e6.b12524648.workers.dev
   auth_endpoint: auth
