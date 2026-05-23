@@ -100,12 +100,10 @@
         "/data/Milan Display/photos/7.jpg"
       ],
       "weights": [
-        "Black",
-        "Black Swashes"
+        "Black"
       ],
       "weightFiles": {
-        "Black": "/data/Milan Display/fonts/Milan Display Black.otf",
-        "Black Swashes": "/data/Milan Display/fonts/Milan Display Black Swashes.otf"
+        "Black": "/data/Milan Display/fonts/Milan Display Black.otf"
       },
       "zipUrl": "/data/Milan Display/fonts/Milan Display Black.zip",
       "isNew": true,
