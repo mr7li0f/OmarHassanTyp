@@ -4,9 +4,9 @@
       "id": 1,
       "title": "قهوة",
       "title_en": "Qahwa Arabic",
-      "description_en": "Qahwa Arabic is a display typeface designed to reflect the authentic flavor of Arabic coffee. It combines smooth curves with sturdy structures, making it perfect for headlines, branding, and packaging. The font’s distinctive character brings a warm, traditional yet contemporary feel to your designs.",
-      "description_ar": "قهوة عربي هو خط عرض صُمم ليعكس النكهة الأصيلة للقهوة العربية. يجمع بين الانحناءات السلسة والبنية القوية، مما يجعله مثالياً للعناوين، وتصميم الهويات البصرية، والتغليف. يضفي طابع الخط المميز إحساساً دافئاً يجمع بين الأصالة والمعاصرة في تصاميمك.",
-      "description_ku": "قەهوەی عەرەبی فۆنتێکی پیشاندانە کە دیزاین کراوە بۆ ڕەنگدانەوەی تام و بۆنی ڕەسەنی قەهوەی عەرەبی. لە نێوان چەماوە نەرمەکان و پێکهاتە بەهێزەکاندا یەکدەگرێت، ئەمەش وا دەکات بۆ ناونیشان و براندکردن و پاکەتکردن گونجاو بێت. کارەکتەری جیاکەرەوەی فۆنتەکە هەستێکی گەرم و نەریتی و لە هەمان کاتدا هاوچەرخ بە دیزاینەکانت دەبەخشێت.",
+      "description_en": "Qahwa Arabic is a display typeface designed to reflect the authentic flavor of Arabic coffee. It combines smooth curves with sturdy structures, making it perfect for headlines, branding, and packaging. The font's distinctive character brings a warm, traditional yet contemporary feel to your designs.",
+      "description_ar": "قهوة أرابك هو خط عرض عربي مصمم ليعكس النكهة الأصيلة للقهوة العربية. يجمع بين المنحنيات الناعمة والهياكل القوية، مما يجعله مثالياً للعناوين الرئيسية والعلامات التجارية والتغليف. طابعه المميز يضفي شعوراً دافئاً تقليدياً وعصرياً في نفس الوقت على تصاميمك.",
+      "description_ku": "قهوة عەرەبی فۆنتێکی دیسپلەی عەرەبییە کە بۆ ڕەنگدانەوەی تەمی ڕاستەقینەی قاوەی عەرەبی دیزاین کراوە. تێکەڵەیەکە لە چەماوەی نەرم و پێکهاتەی بەهێز، کە دەیکات بە باشترین بۆ سەردێڕ و براندینگ و بەسته‌بۆندی. کەسایەتی جیاکەرەوەی هەستێکی گەرم و کۆن و هاوچەرخ دەبەخشێت بە دیزاینەکانت.",
       "downloadUrl": "/data/qahwa/fonts/QahwaArabicMedium.otf",
       "fontFile": "/data/qahwa/fonts/QahwaArabicMedium.otf",
       "images": [
@@ -38,8 +38,8 @@
       "title": "موناكو كوفي",
       "title_en": "Monaco Kufi",
       "description_en": "Monaco Kufi is a beautiful and innovative square Kufi typeface, inspired by the authentic forms of the original Kufi script. The font was designed and programmed by Omar Hassan Type.",
-      "description_ar": "موناكو كوفي هو خط كوفي مربع جميل ومبتكر، مستوحى من الأشكال الأصيلة للخط الكوفي الأصلي. تم تصميم الخط وبرمجته بواسطة عمر حسن تايب.",
-      "description_ku": "مۆناکۆ کوفی فۆنتێکی کوفی چوارگۆشەی جوان و داهێنەرانەیە، ئیلهام لە شێوە ڕەسەنەکانی ڕێنووسی کوفی ڕەسەن وەرگیراوە. فۆنتەکە لەلایەن عومەر حەسەن تایپەوە دیزاین و بەرنامەسازی بۆ کراوە.",
+      "description_ar": "موناكو كوفي هو خط كوفي مربع جميل ومبتكر، مستوحى من الأشكال الأصيلة للخط الكوفي الأصيل. تم تصميم الخط وبرمجته بواسطة عمر حسن.",
+      "description_ku": "موناکۆ کوفی فۆنتێکی کوفی چوارگۆشەیی جوان و داهێنەرانەیە، کە لە شێوە ڕاستەقینەکانی هێلی کوفی ڕەسەنەوە سەرچاوەی گرتووە. فۆنتەکە لەلایەن عمر حسنەوە دیزاین و بەرنامە بۆ دانراوە.",
       "downloadUrl": "/data/Monaco Kufi/fonts/Monaco-Kufi.otf",
       "fontFile": "/data/Monaco Kufi/fonts/Monaco-Kufi.otf",
       "images": [
@@ -57,11 +57,11 @@
     },
     {
       "id": 3,
-      "title": "المهندس",
+      "title": "انجنير",
       "title_en": "Engineer Font",
       "description_en": "Engineer Font was released in 2026. It is a distinctive new engineering font, designed entirely by Thamer Al-Sattam, with some letters contributed by Omar Hassan, and programmed by Omar Hassan.",
-      "description_ar": "تم إصدار خط المهندس عام ٢٠٢٦. وهو خط هندسي جديد ومميز، صممه بالكامل ثامر السطام، بمساهمة عمر حسن في بعض الحروف، وبرمجه عمر حسن.",
-      "description_ku": "فۆنتی ئەندازیاری لە ساڵی ٢٠٢٦ بڵاوکراوەتەوە. فۆنتێکی ئەندازیاری نوێی جیاوازە، بەتەواوی لەلایەن سامر سەددام دیزاین کراوە، لەگەڵ هەندێک پیت بە بەشداری عومەر حەسەن، و بەرنامەسازی لەلایەن عومەر حەسەن.",
+      "description_ar": "تم إصدار خط انجنير عام 2026. إنه خط هندسي جديد ومميز، صمم بالكامل بواسطة ثامر السطام، مع مساهمة عمر حسن في بعض الحروف، وبرمجة عمر حسن.",
+      "description_ku": "فۆنتی ئەندازیار لە ساڵی ٢٠٢٦ بڵاو کراوەتەوە. فۆنتێکی ئەندازیاریی نوێ و جیاوازە، بە تەواوی لەلایەن ثامر السطام دیزاین کراوە، هەندێک پیتیش لەلایەن عمر حسنەوە بەشدار کراوە، و بەرنامەدانەکەیشی لەلایەن عمر حسنەوە بووە.",
       "downloadUrl": "/data/Engineer Font/fonts/Engineer Regular.otf",
       "fontFile": "/data/Engineer Font/fonts/Engineer Regular.otf",
       "images": [
@@ -78,6 +78,34 @@
         "Salt": "/data/Engineer Font/fonts/Engineer-Salt.otf"
       },
       "zipUrl": "/data/Engineer Font/fonts/Engineer-fonts.zip",
+      "isNew": true
+    },
+    {
+      "id": 4,
+      "title": "ميلان للعناوين",
+      "title_en": "Milan Display",
+      "description_en": "Milan Display Font is a beautiful and modern Arabic font, very elegant, suitable for titles and logos. It was designed and programmed by Omar Hassan in 2026.",
+      "description_ar": "خط ميلان للعناوين هو خط عربي جميل وعصري، أنيق للغاية، ومناسب للعناوين والشعارات. صممه وبرمجه عمر حسن عام 2026.",
+      "description_ku": "میلان دیسپلەی فۆنت فۆنتێکی عەرەبی جوان و مۆدێرن، زۆر ڕەسەنە، گونجاوە بۆ ناونیشان و لۆگۆ. لە ساڵی ٢٠٢٦ لەلایەن عومەر حەسەنەوە دیزاین و بەرنامە بۆ دانراوە.",
+      "downloadUrl": "/data/Milan Display/fonts/Milan Display Black.otf",
+      "fontFile": "/data/Milan Display/fonts/Milan Display Black.otf",
+      "images": [
+        "/data/Milan Display/photos/1.jpg",
+        "/data/Milan Display/photos/2.jpg",
+        "/data/Milan Display/photos/3.jpg",
+        "/data/Milan Display/photos/4.jpg",
+        "/data/Milan Display/photos/5.jpg",
+        "/data/Milan Display/photos/6.jpg",
+        "/data/Milan Display/photos/7.jpg"
+      ],
+      "weights": [
+        "Black",
+        "Black Swashes"
+      ],
+      "weightFiles": {
+        "Black": "/data/Milan Display/fonts/Milan Display Black.otf",
+        "Black Swashes": "/data/Milan Display/fonts/Milan Display Black Swashes.otf"
+      },
       "isNew": true
     }
   ],
