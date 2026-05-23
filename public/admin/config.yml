@@ -4,3 +4,132 @@ backend:
   branch: main
   base_url: https://rapid-dawn-98e6.b12524648.workers.dev
   auth_endpoint: auth
+
+site_url: https://omarhassantype.dev
+display_url: https://omarhassantype.dev
+logo_url: /logo.jpeg
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "الصفحات"
+    files:
+      - file: "src/data/home.json"
+        label: "الصفحة الرئيسية"
+        name: "home"
+        fields:
+          - { label: "العنوان الرئيسي", name: "title", widget: "string" }
+          - { label: "الوصف", name: "description", widget: "text" }
+
+  - name: "site_settings"
+    label: "إعدادات الموقع"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "الإعدادات العامة"
+        file: "public/settings.json"
+        fields:
+          - { label: "عنوان الموقع", name: "site_title", widget: "string", required: true }
+          - { label: "اسم العلامة التجارية", name: "brand_name", widget: "string", required: true }
+          - { label: "وصف الموقع (SEO)", name: "site_description", widget: "text", required: false }
+          - { label: "نص الهيرو", name: "hero_text", widget: "string", required: false }
+          - { label: "رابط التليجرام", name: "telegram_url", widget: "string", required: false }
+          - { label: "رابط الواتساب", name: "whatsapp_url", widget: "string", required: false }
+          - { label: "رابط Behance", name: "behance_url", widget: "string", required: false }
+
+  - name: "fonts_management"
+    label: "إدارة الخطوط"
+    delete: true
+    editor:
+      preview: false
+    files:
+      - name: "font_list"
+        label: "قائمة الخطوط المتاحة"
+        file: "public/content.json"
+        fields:
+          - name: "fonts"
+            label: "الخطوط المتوفرة في الموقع"
+            widget: "list"
+            summary: "{{fields.title}} - {{fields.title_en}}"
+            delete: true
+            sort: true
+            fields:
+              - { label: "الاسم بالعربية", name: "title", widget: "string", required: true }
+              - { label: "الاسم بالإنجليزية", name: "title_en", widget: "string", required: true }
+              - { label: "الرقم التعريفي", name: "id", widget: "number", value_type: "int", required: true }
+              - { label: "الوصف بالعربية", name: "description_ar", widget: "text", required: true }
+              - { label: "الوصف بالإنجليزية", name: "description_en", widget: "text", required: true }
+              - { label: "الوصف بالكردية", name: "description_ku", widget: "text", required: false }
+              - { label: "نص المعاينة", name: "preview_text", widget: "string", required: false }
+              - { label: "الصورة الرئيسية", name: "image", widget: "image", required: false }
+              - label: "معرض الصور"
+                name: "images"
+                widget: "list"
+                required: false
+                summary: "{{fields.src}}"
+                field: { label: "رابط الصورة", name: "src", widget: "string" }
+              - { label: "رابط التحميل", name: "downloadUrl", widget: "string", required: false }
+              - { label: "رابط ملف الخط", name: "fontFile", widget: "string", required: false }
+              - { label: "رابط ملف ZIP", name: "zipUrl", widget: "string", required: false }
+              - label: "أوزان الخط"
+                name: "weights"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["Light", "Regular", "Medium", "Bold", "Black", "Salt", "Thin", "ExtraLight", "SemiBold", "ExtraBold"]
+              - label: "ملفات الأوزان"
+                name: "weightFiles"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Light", name: "Light", widget: "string", required: false }
+                  - { label: "Regular", name: "Regular", widget: "string", required: false }
+                  - { label: "Medium", name: "Medium", widget: "string", required: false }
+                  - { label: "Bold", name: "Bold", widget: "string", required: false }
+                  - { label: "Black", name: "Black", widget: "string", required: false }
+                  - { label: "Salt", name: "Salt", widget: "string", required: false }
+              - { label: "جديد", name: "isNew", widget: "boolean", default: true, required: false }
+              - { label: "مدفوع", name: "isPaid", widget: "boolean", default: false, required: false }
+              - { label: "السعر", name: "price", widget: "number", value_type: "int", required: false }
+              - { label: "الرخصة", name: "license", widget: "string", required: false }
+              - label: "الأوزان المجانية"
+                name: "freeWeights"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["Light", "Regular", "Medium", "Bold", "Black", "Salt", "Thin", "ExtraLight", "SemiBold", "ExtraBold"]
+              - label: "الأوزان المدفوعة"
+                name: "paidWeights"
+                widget: "select"
+                multiple: true
+                required: false
+                options: ["Light", "Regular", "Medium", "Bold", "Black", "Salt", "Thin", "ExtraLight", "SemiBold", "ExtraBold"]
+              - { label: "تاريخ الإنشاء", name: "createdAt", widget: "datetime", required: false }
+              - { label: "تاريخ التحديث", name: "updatedAt", widget: "datetime", required: false }
+
+  - name: "social_links"
+    label: "روابط التواصل الاجتماعي"
+    delete: true
+    editor:
+      preview: false
+    files:
+      - name: "social_list"
+        label: "قائمة المنصات الاجتماعية"
+        file: "public/content.json"
+        fields:
+          - name: "socialLinks"
+            label: "روابط التواصل"
+            widget: "list"
+            summary: "{{fields.platform}}"
+            delete: true
+            sort: true
+            fields:
+              - { label: "اسم المنصة", name: "platform", widget: "string", required: true }
+              - { label: "الرابط", name: "url", widget: "string", required: true }
+              - { label: "الأيقونة", name: "icon", widget: "string", required: false }
+              - { label: "كود SVG", name: "icon_svg", widget: "text", required: false }
+              - { label: "ترتيب العرض", name: "sort_order", widget: "number", value_type: "int", required: false }
