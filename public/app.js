@@ -4561,7 +4561,11 @@ function renderFontDetailPage(id, options = {}) {
   if (legacySliderWrap) legacySliderWrap.classList.add('hidden');
 
   const gallery = document.getElementById('fd-images');
-  if (gallery) renderDetailMediaGallery(gallery, images, font.title || '');
+  if (gallery) {
+    gallery.className = '';
+    if (activeFontId) gallery.classList.add('font-gallery-' + activeFontId);
+    renderDetailMediaGallery(gallery, images, font.title || '');
+  }
 
   const weights = getFontWeightList(font);
   const weightOptionsForPreview = getFontWeightDownloadOptions(font);
