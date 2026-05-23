@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>الصفحة غير موجودة — إعادة توجيه</title>
+  <link rel="stylesheet" href="./style.css?v=20260424.1" />
+</head>
+<body>
+  <main style="padding:2rem;text-align:center;">
+    <h1>الصفحة غير موجودة</h1>
+    <p>جاري التحويل إلى الصفحة الرئيسية...</p>
+  </main>
+  <script>
+    (function(){
+      var p = location.pathname.toLowerCase();
+      var map = [
+        {re: /^\/(?:index(?:\.html)?|home(?:\.html)?)?$/, to:'/home.html'},
+        {re: /^\/(?:fonts)(?:\/.*)?$/, to:'/fonts.html'},
+        {re: /^\/(?:font)(?:\/.*)?$/, to:'/font.html'}
+      ];
+      for(var i=0;i<map.length;i++){
+        if(map[i].re.test(p)){
+          location.replace(map[i].to + location.search + location.hash);
+          return;
+        }
+      }
+      // fallback to home
+      location.replace('/home.html' + location.search + location.hash);
+    })();
+  </script>
+</body>
+</html>
