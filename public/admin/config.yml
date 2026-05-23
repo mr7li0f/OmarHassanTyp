@@ -2,9 +2,7 @@ backend:
   name: github
   repo: mr7li0f/OmarHassanTyp
   branch: main
-  auth_type: implicit
-  base_url: https://github.com
-  auth_endpoint: login/oauth/authorize
+  base_url: https://decap-cms-oauth-provider.vercel.app
 
 media_folder: "public/assets"
 public_folder: "/public/assets"
