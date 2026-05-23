@@ -1127,7 +1127,7 @@ body[data-page='font'] #fd-images .fd-media-stage-wrap {position: relative; bord
 body[data-page='font'] #fd-images .fd-media-stage-open {display: block; width: 100%; border: 0; padding: 0; margin: 0; background: transparent; cursor: zoom-in; position: relative; border-radius: 16px; overflow: hidden;}
 
 body[data-page='font'] #fd-images .fd-media-stage-img {width: 100%; aspect-ratio: 16 / 9; display: block; object-fit: cover; transition: transform 0.35s ease;}
-.font-gallery-4 .fd-media-stage-img {width: auto; height: auto; max-height: 78vh; aspect-ratio: auto; object-fit: contain; margin: 0 auto; display: block;}
+.font-gallery-4 .fd-media-stage-img {width: auto !important; height: auto !important; max-height: 78vh !important; aspect-ratio: auto !important; object-fit: contain !important; margin: 0 auto; display: block;}
 .font-gallery-4 .fd-media-stage-open {display: flex !important; align-items: center; justify-content: center;}
 
 body[data-page='font'] #fd-images .fd-media-stage-img.fd-media-stage-fade {animation: fdMediaStageFade 0.34s ease both;}

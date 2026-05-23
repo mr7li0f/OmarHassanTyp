@@ -4562,7 +4562,7 @@ function renderFontDetailPage(id, options = {}) {
 
   const gallery = document.getElementById('fd-images');
   if (gallery) {
-    gallery.className = '';
+    gallery.className = 'fd-images';
     if (activeFontId) gallery.classList.add('font-gallery-' + activeFontId);
     renderDetailMediaGallery(gallery, images, font.title || '');
   }
