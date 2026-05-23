@@ -3041,7 +3041,7 @@ function normalizeFontItem(font) {
     : (typeof font?.images === 'string' && font.images.trim() ? [font.images] : []);
   const imageList = rawImages.map(resolveAssetUrl).filter(Boolean);
   const singleImage = resolveAssetUrl(font?.image || '');
-  const mergedImages = mergeUniqueLists([imageList, singleImage ? [singleImage] : []]);
+  const mergedImages = imageList;
   const normalizedId = Number(font?.id);
   const paidValue = font?.isPaid ?? font?.is_paid;
   const normalizedIsPaid = typeof paidValue === 'string'
@@ -4084,7 +4084,7 @@ function buildFontCard(f) {
   const weights = getFontWeightList(f);
   const en = f.titleEn || '';
   const posters = getFontImages(f);
-  const posterCover = selectCardPosterImage(posters);
+  const posterCover = resolveAssetUrl(f.image || '') || selectCardPosterImage(posters);
   const posterCount = posters.length;
   const rawTitle = String(f.title || t('accountLabel'));
   const safeTitle = escapeHtml(rawTitle);
@@ -4103,7 +4103,7 @@ function buildFontCard(f) {
     : '';
 
   return `
-    <div class="font-card" onclick="openFontPage(${f.id})" role="button" tabindex="0" aria-label="${escapeHtml(t('openFontDetails', { title: rawTitle }))}">
+    <div class="font-card" data-font-id="${f.id}" onclick="openFontPage(${f.id})" role="button" tabindex="0" aria-label="${escapeHtml(t('openFontDetails', { title: rawTitle }))}">
       <div class="font-card-media">
         <img class="smart-lazy-img" src="${posterCover}" alt="${safeTitle}" loading="lazy" onerror="${IMAGE_ONERROR_ATTR}" />
         ${badgeHtml}
