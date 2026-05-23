@@ -3146,7 +3146,7 @@ function getDisplayFonts() {
       ? primaryImages
       : mergeUniqueLists(ordered.map(item => getFontImages(item)));
     primary.images = mergedImages;
-    primary.image = mergedImages[0] || '';
+    primary.image = primary.image || mergedImages[0] || '';
 
     primary.freeWeights = mergeUniqueLists(
       ordered.map(item => normalizeTextList(item.freeWeights).map(resolveWeightName))
