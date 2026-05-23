@@ -2,7 +2,7 @@ backend:
   name: github
   repo: mr7li0f/OmarHassanTyp
   branch: main
-  base_url: https://decap-cms-oauth-provider.vercel.app
+  base_url: https://decap-cms-oauth-gate.vercel.app
 
 media_folder: "public/assets"
 public_folder: "/public/assets"
