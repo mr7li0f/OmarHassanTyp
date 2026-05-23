@@ -1402,7 +1402,11 @@ function buildAccountRailIconLink(link, className) {
   const href = normalizeOutboundUrl(link?.href || link?.url || '');
   if (!href || href === '#') return '';
 
-  const label = escapeHtml(String(link?.platform || formatHostLabel(href) || t('accountLabel')));
+  const accountLabel = String(t('accountLabel') || '').trim();
+  const platform = String(link?.platform || '').trim();
+  const hostLabel = formatHostLabelOrEmpty(href);
+  const labelText = (platform && platform !== accountLabel) ? platform : (hostLabel || accountLabel);
+  const label = escapeHtml(labelText);
   const iconHtml = getLinkIcon(link);
   return `<a class="${className}" href="${href}" target="_blank" rel="noopener" aria-label="${label}" title="${label}">${iconHtml}</a>`;
 }
@@ -2739,6 +2743,15 @@ function formatHostLabel(url) {
   }
 }
 
+function formatHostLabelOrEmpty(url) {
+  try {
+    const normalized = /^(https?:)?\/\//i.test(url) ? url : `https://${url}`;
+    return new URL(normalized).hostname.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+}
+
 function normalizeOutboundUrl(url) {
   const clean = String(url ?? '').trim();
   if (!clean) return '#';
@@ -4018,13 +4031,18 @@ function renderLinkSection(targetId, links, emptyLabel) {
 
   grid.innerHTML = active.map(link => {
     const href = normalizeOutboundUrl(link.url);
-    const platformLabel = escapeHtml(String(link.platform || t('accountLabel')).trim() || t('accountLabel'));
+    const accountLabel = String(t('accountLabel') || '').trim();
+    const platform = String(link?.platform || '').trim();
+    const hostLabel = formatHostLabelOrEmpty(href);
+    const visibleLabelText = (platform && platform !== accountLabel) ? platform : hostLabel;
+    const ariaLabelText = visibleLabelText || accountLabel;
+    const platformLabel = escapeHtml(ariaLabelText);
     const iconHtml = getLinkIcon(link);
     return `
       <a class="social-icon-card" href="${href}" target="_blank" rel="noopener" aria-label="${platformLabel}" title="${platformLabel}">
         <div class="card-inner">
           <span class="src-icon">${iconHtml}</span>
-          <span class="src-label">${platformLabel}</span>
+          ${visibleLabelText ? `<span class="src-label">${escapeHtml(visibleLabelText)}</span>` : ''}
         </div>
       </a>`;
   }).join('');
@@ -5269,7 +5287,7 @@ window.removeSocial = i => { contentData.socialLinks.splice(i,1); renderSocialEd
 const addSocialBtn = document.getElementById('add-social-btn');
 if (addSocialBtn) addSocialBtn.onclick = () => {
   contentData.socialLinks = contentData.socialLinks || [];
-  contentData.socialLinks.push({ id: Date.now(), platform:t('accountLabel'), url:'', icon:'link', iconSvg:'' });
+  contentData.socialLinks.push({ id: Date.now(), platform:'', url:'', icon:'link', iconSvg:'' });
   renderSocialEditor();
 };
 const saveSocialBtn = document.getElementById('save-social-btn');
@@ -5306,7 +5324,7 @@ window.removeWorkSocial = i => { contentData.workLinks.splice(i,1); renderWorkSo
 const addWorkSocialBtn = document.getElementById('add-work-social-btn');
 if (addWorkSocialBtn) addWorkSocialBtn.onclick = () => {
   contentData.workLinks = contentData.workLinks || [];
-  contentData.workLinks.push({ id: Date.now(), platform:t('accountLabel'), url:'', icon:'link', iconSvg:'' });
+  contentData.workLinks.push({ id: Date.now(), platform:'', url:'', icon:'link', iconSvg:'' });
   renderWorkSocialEditor();
 };
 const saveWorkSocialBtn = document.getElementById('save-work-social-btn');
@@ -6052,5 +6070,3 @@ initIconPicker();
 initImageViewer();
 initSettingsPanel();
 initUserPreferences();
-
-
