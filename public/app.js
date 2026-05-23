@@ -3037,7 +3037,7 @@ function getFontWeightList(font) {
 
 function normalizeFontItem(font) {
   const rawImages = Array.isArray(font?.images)
-    ? font.images
+    ? font.images.map(item => typeof item === 'object' ? (item.src || item.url || item.path || '') : item)
     : (typeof font?.images === 'string' && font.images.trim() ? [font.images] : []);
   const imageList = rawImages.map(resolveAssetUrl).filter(Boolean);
   const singleImage = resolveAssetUrl(font?.image || '');
